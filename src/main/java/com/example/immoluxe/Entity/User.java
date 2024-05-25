@@ -1,17 +1,15 @@
 package com.example.immoluxe.Entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-
+@Data
+@Builder
 @Entity
 @Getter
 @Setter
@@ -60,6 +58,7 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
 
     @Override
     public boolean isEnabled() {
