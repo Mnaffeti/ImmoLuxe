@@ -19,7 +19,7 @@ import java.util.List;
 // @ToString
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     Long IdUser ;
     String firstname ;
     String lastname ;
@@ -43,7 +43,6 @@ public class User implements UserDetails {
     public String getUsername() {
         return email;
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -62,6 +61,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }
