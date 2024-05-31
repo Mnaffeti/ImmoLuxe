@@ -3,13 +3,11 @@ package com.example.immoluxe.Controller;
 import com.example.immoluxe.Entity.Contrat;
 import com.example.immoluxe.Service.IContratService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/api/v1")
 public class ContratController {
         IContratService contratService;
         @PostMapping(path="/contrat")
