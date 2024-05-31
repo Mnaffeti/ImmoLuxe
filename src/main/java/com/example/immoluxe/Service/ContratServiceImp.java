@@ -4,10 +4,13 @@ import com.example.immoluxe.Entity.Contrat;
 import com.example.immoluxe.Entity.TypeContrat;
 import com.example.immoluxe.Entity.User;
 import com.example.immoluxe.Repository.ContratRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Service
+@AllArgsConstructor
 public class ContratServiceImp implements IContratService {
     ContratRepository contratRep ;
     @Override
@@ -24,7 +27,11 @@ public class ContratServiceImp implements IContratService {
     public List<Contrat> GetAllContrat() {
         return contratRep.findAll();
     }
-
+    @Override
+    public Contrat deletebloc(Contrat contrat) {
+        contratRep.delete(contrat);
+        return contratRep.findById(contrat.getIdContrat()).orElse(null);
+    }
     @Override
     public TypeContrat GetContratTypeById(Long id) {
         return contratRep.findById(id).get().getTypeContrat();

@@ -3,7 +3,7 @@ package com.example.immoluxe.Service;
 import com.example.immoluxe.Entity.Contrat;
 import com.example.immoluxe.Entity.TypeContrat;
 import com.example.immoluxe.Entity.User;
-import jakarta.persistence.EnumType;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -18,4 +18,5 @@ public interface IContratService {
     User GetProprietaireByIdContrat(Long id);
     User GetAgentByIdContrat(Long id);
     void DeleteContratById(Long id);
+    Contrat deletebloc(Contrat contrat);
 }
