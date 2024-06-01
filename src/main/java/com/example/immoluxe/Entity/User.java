@@ -27,6 +27,8 @@ public class User implements UserDetails {
     String password ;
     @Enumerated(EnumType.STRING)
     Role role ;
+    private String verificationToken;
+    private boolean verified;
 
 
     @Override
@@ -61,6 +63,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return verified;
     }
 }
