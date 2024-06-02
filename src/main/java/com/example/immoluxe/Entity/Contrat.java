@@ -28,6 +28,10 @@ public class Contrat {
     User agent;
 
     @ManyToOne
+    @JoinColumn(name = "id_proprietaire")
+    User proprietaire;
+
+    @ManyToOne
     @JoinColumn(name = "id_property")
     Property property;
 

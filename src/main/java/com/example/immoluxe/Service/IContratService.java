@@ -13,10 +13,10 @@ public interface IContratService {
     List<Contrat> GetAllContrat();
     TypeContrat GetContratTypeById(Long id);
     List<Contrat> GetAllContratByType(TypeContrat type);
-    Contrat UpdateContrat(Long id);
+    Contrat UpdateContrat(Contrat contrat);
     User GetClientByIdContrat(Long id);
     User GetProprietaireByIdContrat(Long id);
     User GetAgentByIdContrat(Long id);
-    void DeleteContratById(Long id);
-    Contrat deletebloc(Contrat contrat);
+    boolean deleteContratById(Long id);
+    Contrat deleteContrat(Contrat contrat);
 }
