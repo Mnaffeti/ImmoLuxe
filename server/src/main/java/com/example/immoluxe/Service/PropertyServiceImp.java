@@ -7,6 +7,7 @@ import com.example.immoluxe.Entity.User;
 import com.example.immoluxe.Repository.PropertyRepository;
 import jakarta.persistence.EnumType;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,12 @@ public class PropertyServiceImp implements IPropertyService {
     PropertyRepository propertyRepository;
     @Override
     public Property AddProperty(Property property) {
+
         return propertyRepository.save(property);
+    }
+    @Override
+    public List<Property> GetAllProperties() {
+        return propertyRepository.findAll();
     }
 
     @Override

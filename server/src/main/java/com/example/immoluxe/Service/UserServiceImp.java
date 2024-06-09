@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@AllArgsConstructor
-@Service
-public class UserServiceImp {
+//@AllArgsConstructor
+
+public class UserServiceImp {/*
     UserRepository userRepo ;
     public User AddUser(User u){
         return userRepo.save(u) ;
@@ -32,4 +32,5 @@ public class UserServiceImp {
     public void deleteUser(Long id) {
         userRepo.deleteById(id);
     }
+    */
 }

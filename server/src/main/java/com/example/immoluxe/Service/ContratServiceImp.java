@@ -30,7 +30,7 @@ public class ContratServiceImp implements IContratService {
     @Override
     public Contrat deletebloc(Contrat contrat) {
         contratRep.delete(contrat);
-        return contratRep.findById(contrat.getIdContrat()).orElse(null);
+        return contratRep.findById(Long.valueOf(contrat.getId())).orElse(null);
     }
     @Override
     public TypeContrat GetContratTypeById(Long id) {
@@ -55,12 +55,12 @@ public class ContratServiceImp implements IContratService {
         Contrat contrat = contratRep.findById(id).orElse(null);
         return contratRep.save(contrat);
     }
-
+    /*
     @Override
     public User GetClientByIdContrat(Long id) {
         return contratRep.findById(id).get().getClient();
     }
-
+    /*
     @Override
     public User GetProprietaireByIdContrat(Long id) {
         return contratRep.findById(id).get().getProperty().getProprietaire();
@@ -71,6 +71,7 @@ public class ContratServiceImp implements IContratService {
         return contratRep.findById(id).get().getAgent();
     }
 
+     */
     @Override
     public void DeleteContratById(Long id) {
         contratRep.deleteById(id);

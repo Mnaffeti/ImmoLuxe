@@ -16,10 +16,10 @@ import java.io.UnsupportedEncodingException;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service
-@RequiredArgsConstructor
+//@Service
+//RequiredArgsConstructor
 
-public class AuthenticationService {
+public class AuthenticationService {/*
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -70,4 +70,5 @@ public class AuthenticationService {
         }
         return false;
     }
+*/
 }
