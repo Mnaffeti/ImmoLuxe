@@ -15,11 +15,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-@Configuration
-@RequiredArgsConstructor
+//@Configuration
+//@RequiredArgsConstructor
 public class ApplicationConfig {
-    private final UserRepository userRepository;
-    @Bean
+    //private final UserRepository userRepository;
+    /*@Bean
     public UserDetailsService userDetailsService() {
         return username ->userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("user not found"));
 
@@ -42,5 +42,5 @@ public class ApplicationConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    }*/
 }

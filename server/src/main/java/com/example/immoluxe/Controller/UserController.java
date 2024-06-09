@@ -11,10 +11,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@RestController
-@AllArgsConstructor
+//@RestController
+//@AllArgsConstructor
 public class UserController {
-    UserServiceImp userService ;
+   /* UserServiceImp userService ;
     @PostMapping("/user-add")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         User createdUser = userService.AddUser(user);
@@ -40,5 +40,5 @@ public class UserController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
-
+*/
 }
