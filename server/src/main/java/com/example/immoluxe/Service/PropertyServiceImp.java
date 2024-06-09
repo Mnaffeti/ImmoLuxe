@@ -20,7 +20,7 @@ public class PropertyServiceImp implements IPropertyService {
     PropertyRepository propertyRepository;
     @Override
     public Property AddProperty(Property property) {
-
+        property.setCreatedBy("dd");
         return propertyRepository.save(property);
     }
     @Override
