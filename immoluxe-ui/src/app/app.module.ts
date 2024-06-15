@@ -9,6 +9,27 @@ import { HttpTokenInterceptor } from './services/http-interceptor/http-token.int
 import { MenuComponent } from './components/menu/menu.component';
 import { HomeComponent } from './pages/home/home.component';
 
+
+
+import { HttpClientModule } from '@angular/common/http'
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { PropertyListComponent } from './properties-list/properties-list.component';
+import { AddPropertyComponent } from './add-properties/add-properties.component';
+import { FormsModule } from '@angular/forms';
+
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule} from '@angular/material/core';
+
+
+import { UpdatePropertyComponent } from './update-properties/update-properties.component';
+import { ShowDetailsComponent } from './show-details/show-details.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+
+
 export function kcFactory(kcServcie: KeycloakService) {
   return () => kcServcie.init();
 }
@@ -16,13 +37,24 @@ export function kcFactory(kcServcie: KeycloakService) {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     MenuComponent,
+    PropertyListComponent,
+    
+    AddPropertyComponent,
+    UpdatePropertyComponent,
+         ShowDetailsComponent,
+         
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
-  ],
+    AppRoutingModule,
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    HttpClientModule,FormsModule,HomeComponent, BrowserAnimationsModule , 
+    MatFormFieldModule, MatInputModule,MatFormFieldModule, MatInputModule, MatDatepickerModule,
+     MatNativeDateModule
+  ],  
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -30,6 +62,7 @@ export function kcFactory(kcServcie: KeycloakService) {
       multi: true
     }, {
       provide: APP_INITIALIZER,
+      
       deps: [KeycloakService],
       useFactory: kcFactory,
       multi: true
