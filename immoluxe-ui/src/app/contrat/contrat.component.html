@@ -1,0 +1,146 @@
+<br><br>
+<br><br>
+<div class="container-sm">
+  <div class="col-md-6 offset-md-3  container-sm ">
+    <form #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" class="row g-3 form-container  container-sm">
+
+      <div class="form-group col-md-6">
+        <label for="idAgent"><b>Id Agent</b></label>
+        <input id="idAgent" type="number" aria-describedby="idAgent-error" class="form-control" [(ngModel)]="contrat.idAgent" name="idAgent" required #idAgent="ngModel" [ngClass]="{ 'is-invalid': f.submitted && idAgent.errors }">
+        <div id="idAgent-error" class="invalid-feedback">Id Agent is required</div>
+        <div *ngIf="f.submitted && idAgent.errors" class="invalid-feedback">
+          <div *ngIf="idAgent.errors['required']">Id Agent is required</div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="idClient"><b>Id Client</b></label>
+        <input id="idClient" type="number" aria-describedby="idClient-error" class="form-control" title="Id Client" placeholder="Id Client" [(ngModel)]="contrat.idClient" name="idClient" required #idClient="ngModel" [ngClass]="{ 'is-invalid': f.submitted && idClient.errors }">
+        <div id="idClient-error" class="invalid-feedback">Id Client is required</div>
+        <div *ngIf="f.submitted && idClient.errors" class="invalid-feedback">
+          <div *ngIf="idClient.errors['required']">Id Client is required</div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="idProprietaire"><b>Id Proprietaire</b></label>
+        <input id="idProprietaire" type="number" aria-describedby="idProprietaire-error" class="form-control" title="Id Proprietaire" placeholder="Id Proprietaire" [(ngModel)]="contrat.idProprietaire" name="idProprietaire" required #idProprietaire="ngModel" [ngClass]="{ 'is-invalid': f.submitted && idProprietaire.errors }">
+        <div id="idProprietaire-error" class="invalid-feedback">Id Proprietaire is required</div>
+        <div *ngIf="f.submitted && idProprietaire.errors" class="invalid-feedback">
+          <div *ngIf="idProprietaire.errors['required']">Id Proprietaire is required</div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="idProperty"><b>Id Property</b></label>
+        <input id="idProperty" type="number" aria-describedby="idProperty-error" class="form-control" title="Id Property" placeholder="Id Property" [(ngModel)]="contrat.idProperty" name="idProperty" required #idProperty="ngModel" [ngClass]="{ 'is-invalid': f.submitted && idProperty.errors }">
+        <div id="idProperty-error" class="invalid-feedback">Id Property is required</div>
+        <div *ngIf="f.submitted && idProperty.errors" class="invalid-feedback">
+          <div *ngIf="idProperty.errors['required']">Id Property is required</div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label for="propertyType"><b>Property Type</b></label>
+        <select id="propertyType" class="form-select" aria-required="true" [(ngModel)]="contrat.idProperty.type" name="propertyType" required #propertyType="ngModel" [ngClass]="{ 'is-invalid': f.submitted && propertyType.errors }" title="Select the property type">
+          <option selected disabled value="">Choose...</option>
+          <option>Appartement</option>
+          <option>House</option>
+          <option>Terrain</option>
+        </select>
+        <div *ngIf="f.submitted && propertyType.errors" class="invalid-feedback" id="propertyType-error">
+          <div *ngIf="propertyType.errors['required']">Property Type is required</div>
+        </div>
+      </div>
+      <!-- Add conditional rendering for Appartement selection -->
+      <div *ngIf="contrat.idProperty.type === 'Appartement'">
+        <div class="form-group col-md-6">
+          <label><b>N_appart_Totale</b></label>
+          <input type="number" class="form-control" [(ngModel)]="contrat.idProperty.type" name="nAppartTotal" placeholder="N_appart_Totale">
+        </div>
+        <div class="form-group col-md-6">
+          <label><b>N_appart_To_have</b></label>
+          <input type="number" class="form-control" [(ngModel)]="contrat.idProperty.type" name="nAppartToHave" placeholder="N_appart_To_have">
+        </div>
+      </div>
+      <!-- Add conditional rendering for Maison or Appartement selection -->
+      <div *ngIf="contrat.idProperty.type === 'House' || contrat.idProperty.type === 'Appartement'">
+        <div class="form-group col-md-6">
+          <label><b>Has Equipment?</b></label>
+          <select id="hasEquipment" aria-label="Has Equipment?" class="form-select" [(ngModel)]="contrat.hasEquipment" name="hasEquipment">
+            <option value="">Choose...</option>
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+
+        <!-- Add conditional rendering for Has Equipment answer -->
+        <div *ngIf="contrat.hasEquipment === true">
+          <div class="form-group col-md-6">
+            <label><b>Équipements</b></label>
+            <input type="text" class="form-control" [(ngModel)]="contrat.equipements" name="equipements" placeholder="Équipements">
+          </div>
+        </div>
+      </div>
+      <!-- Add conditional rendering for Maison selection -->
+      <div *ngIf="contrat.idProperty.type === 'House'">
+        <div class="form-group col-md-6">
+          <label><b>N_bathrooms</b></label>
+          <input type="number" class="form-control" [(ngModel)]="contrat.idProperty.bathrooms" name="nBathrooms" placeholder="N_bathrooms">
+        </div>
+        <div class="form-group col-md-6">
+          <label><b>N_bedrooms</b></label>
+          <input type="number" class="form-control" [(ngModel)]="contrat.idProperty.bedrooms" name="nBedrooms" placeholder="N_bedrooms">
+        </div>
+      </div>
+      <div class="form-group col-md-12">
+        <label><b>Address</b></label>
+        <input type="text" class="form-control" [(ngModel)]="contrat.idProperty.address" name="address" required #address="ngModel" [ngClass]="{ 'is-invalid': f.submitted && address.errors }">
+        <div *ngIf="f.submitted && address.errors" class="invalid-feedback">
+          <div *ngIf="address.errors['required']">Address is required</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label><b>Date Début</b></label>
+        <input type="date" class="form-control" [(ngModel)]="contrat.dateDebut" name="dateDebut" required #dateDebut="ngModel" [ngClass]="{ 'is-invalid': f.submitted && dateDebut.errors }">
+        <div *ngIf="f.submitted && dateDebut.errors" class="invalid-feedback">
+          <div *ngIf="dateDebut.errors['required']">Date Début is required</div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label><b>Date Fin</b></label>
+        <input type="date" class="form-control" [(ngModel)]="contrat.dateFin" name="dateFin" required #dateFin="ngModel" [ngClass]="{ 'is-invalid': f.submitted && dateFin.errors }">
+        <div *ngIf="f.submitted && dateFin.errors" class="invalid-feedback">
+          <div *ngIf="dateFin.errors['required']">Date Fin isrequired</div>
+        </div>
+      </div>
+
+      <div class="form-group col-md-6">
+        <label><b>Montant</b></label>
+        <input type="number" class="form-control" [(ngModel)]="contrat.idProperty.price" name="montant" required #montant="ngModel" [ngClass]="{ 'is-invalid': f.submitted && montant.errors }">
+        <div *ngIf="f.submitted && montant.errors" class="invalid-feedback">
+          <div *ngIf="montant.errors['required']">Montant is required</div>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label><b>Area</b></label>
+        <input type="number" class="form-control" [(ngModel)]="contrat.idProperty.area" name="area" required #area="ngModel" [ngClass]="{ 'is-invalid': f.submitted && area.errors }">
+        <div *ngIf="f.submitted && area.errors" class="invalid-feedback">
+          <div *ngIf="area.errors['required']">Area is required</div>
+        </div>
+      </div>
+      <div class="form-group col-md-12">
+        <label><b>Description</b></label>
+        <textarea class="form-control" [(ngModel)]="contrat.description" name="description"
+                  required #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.errors }"></textarea>
+        <div *ngIf="f.submitted && description.errors" class="invalid-feedback">
+          <div *ngIf="description.errors['required']">Description is required</div>
+        </div>
+      </div>
+      <div class="form-group col-md-12">
+        <button type="submit" class="btn btn-primary" (click)="generatePdf()">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -28,7 +28,7 @@ public class Contrat extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "id_agent")
     User agent;
-*/
+
     @ManyToOne
     @JoinColumn(name = "id_proprietaire")
     User proprietaire;
@@ -36,7 +36,7 @@ public class Contrat extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "id_property")
     Property property;
-
+*/
     @Enumerated(EnumType.STRING)
     TypeContrat typeContrat;
 
