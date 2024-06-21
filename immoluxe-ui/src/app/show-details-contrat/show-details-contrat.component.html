@@ -20,32 +20,32 @@
         </thead>
 
         <tbody>
-        <tr>
+        <!--tr>
           <td><b>IdContrat</b></td>
           <td>{{contrat.idContrat}}</td>
-        </tr><tr>
+        </tr--><tr>
           <td><b>IdAgent</b></td>
-          <td>{{contrat.idAgent}}</td>
+          <td>{{contrat.createdBy}}</td>
         </tr><tr>
-          <td><b>IdProprietaire</b></td>
-          <td>{{contrat.idProprietaire}}</td>
+          <td><b>dateFin</b></td>
+          <td>{{contrat.dateFin}}</td>
         </tr><tr>
-          <td><b>IdClient</b></td>
-          <td>{{contrat.idClient}}</td>
+          <td><b>dateDebut</b></td>
+          <td>{{contrat.dateDebut}}</td>
         </tr><tr>
-          <td><b>IdProperty</b></td>
-          <td>{{contrat.idProperty}}</td>
+          <td><b>montant</b></td>
+          <td>{{contrat.montant}}</td>
         </tr>
         <tr>
-          <td><b>Address</b></td>
-          <td>{{contrat.idProperty.address}}</td>
+          <td><b>typeContrat</b></td>
+          <td>{{contrat.typeContrat}}</td>
         </tr>
 
         </tbody>
       </table>
 
-      <a routerLink="/updating-by-id/{{contrat.idContrat}}" id="btn1"class="btn btn-secondary">Update Details</a>
-      <a routerLink="/show-all-properties" id="btn2" class="btn btn-danger">Back</a>
+      <!--a routerLink="/updating-by-id/{{contrat.idContrat}}" id="btn1"class="btn btn-secondary">Update Details</a>
+      <a routerLink="/show-all-properties" id="btn2" class="btn btn-danger">Back</a -->
     </div>
 
   </div>

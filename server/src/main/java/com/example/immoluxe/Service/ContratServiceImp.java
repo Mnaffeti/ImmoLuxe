@@ -1,32 +1,69 @@
 package com.example.immoluxe.Service;
 
 import com.example.immoluxe.Entity.Contrat;
+import com.example.immoluxe.Entity.Property;
 import com.example.immoluxe.Entity.TypeContrat;
 import com.example.immoluxe.Entity.User;
 import com.example.immoluxe.Repository.ContratRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
-public class ContratServiceImp {/*implements IContratService {
+public class ContratServiceImp implements IContratService {
     ContratRepository contratRep ;
     @Override
     public Contrat AddContrat(Contrat contrat) {
         return contratRep.save(contrat);
     }
-
-    @Override
-    public Contrat GetContratById(Long id) {
-        return contratRep.findById(id).get();
-    }
-
     @Override
     public List<Contrat> GetAllContrat() {
         return contratRep.findAll();
     }
+
+    @Override
+    public ResponseEntity<Contrat> updateContratByID(@PathVariable  Long id,@RequestBody Contrat contrat) {
+            Contrat Ncontrat = contratRep.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Contrat with id "+id+" does not exist"));
+
+        Ncontrat.setTypeContrat(Ncontrat.getTypeContrat());
+        Ncontrat.setDateDebut(Ncontrat.getDateDebut());
+        Ncontrat.setDateFin(Ncontrat.getDateFin());
+        Ncontrat.setMontant(Ncontrat.getMontant());
+            Contrat updatedcontrat = contratRep.save(Ncontrat);
+
+            return ResponseEntity.ok(updatedcontrat);
+    }
+
+    @Override
+    public ResponseEntity<Contrat> getContratByID(Long id) {
+        Contrat contrat = contratRep.findById(id).orElseThrow(() -> new ResourceNotFoundException("Contrat with id "+id+" does not exist"));
+        return ResponseEntity.ok(contrat);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Boolean>> deleteContrat(Long id) {
+        Contrat contrat = contratRep.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Contrat with id "+id+" does not exist"));
+
+        contratRep.delete(contrat);
+
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("Deleted", Boolean.TRUE);
+        return ResponseEntity.ok(response);
+    }
+
+
+/*
+
     @Override
     public Contrat deleteContrat(Contrat contrat) {
         contratRep.delete(contrat);
@@ -87,11 +124,5 @@ public class ContratServiceImp {/*implements IContratService {
     }
 
 
-    @Override
-    public boolean deleteContratById(Long id) {
-        return contratRep.findById(id).map(contrat -> {
-            contratRep.delete(contrat);
-            return true;
-        }).orElse(false);
-    }*/
+*/
 }

@@ -9,7 +9,7 @@ import {Contrat} from "./contrats";
 })
 export class contratService {
 
-  private baseURL = "http://localhost:8080/api/v1/Contrat";
+  private baseURL = "http://localhost:8080/api/v1/contrat";
 
   constructor(private httpClient: HttpClient) { }
 

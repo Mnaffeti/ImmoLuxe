@@ -19,7 +19,7 @@ export class ContratComponent {
 
 
   submitform!: NgForm;
-  private baseURL = "http://localhost:8080/api/v1/Contrat";
+  private baseURL = "http://localhost:8080/api/v1/contrat";
   contrat: Contrat = new Contrat();
 
   ngOnInit(): void { }
@@ -30,17 +30,25 @@ export class ContratComponent {
   saveProperty() {
     this.contratService.addContrat(this.contrat).subscribe(data => {
         console.log(data);
+        console.log('goToPropertyList...');
         this.goToPropertyList();
+
       },
       error => console.log(error));
   }
   goToPropertyList() {
     this.router.navigate(['/show-all-contrats']);
+    console.log('gIn PropertyList...');
+    this.generatePdf();
   }
 
   generatePdf(): void {
+
+  //  this.onSubmit();
+
+
     console.log('Generating PDF...');
-    if (window.confirm('Are you sure you want to generate the PDF?')) {
+   // if (window.confirm('Are you sure you want to generate the PDF?')) {
       const doc = new jsPDF();
 
       // Add title
@@ -61,9 +69,10 @@ export class ContratComponent {
       doc.text('Id Agent:', leftColumnX, 40);
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(12);
-      doc.text(` ${this.contrat.idAgent}`, rightColumnX, 40);
+      console.log(this.contrat.createdBy);
+      doc.text(` ${this.contrat.createdBy}`, rightColumnX, 40);
 
-      doc.setFontSize(14);
+   /*   doc.setFontSize(14);
       doc.setFont('helvetica', 'bolditalic');
       doc.text('Id Proprietaire:', leftColumnX, 50);
       doc.setFont('helvetica', 'normal');
@@ -86,12 +95,7 @@ export class ContratComponent {
       doc.text(` ${this.contrat.idProperty}`, rightColumnX, 70);
 
 
-      doc.setFontSize(14);
-      doc.setFont('helvetica', 'bolditalic');
-      doc.text('Property Type:', leftColumnX, 80);
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(12);
-      doc.text(` ${this.contrat.idProperty.type}`, rightColumnX, 80);
+
 
 
       doc.setFontSize(14);
@@ -107,27 +111,39 @@ export class ContratComponent {
       doc.text('Area:', leftColumnX, 100);
       doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
-      doc.text(` ${this.contrat.idProperty.area}`, rightColumnX, 100);
+      doc.text(` ${this.contrat.idProperty.area}`, rightColumnX, 100);*/
 
 
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bolditalic');
-      doc.text('Date Debut:', rightColumnX, 110);
+      doc.text('Date Debut:', leftColumnX, 50);
       doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
-      doc.text(` ${this.contrat.dateDebut}`, rightColumnX, 110);
+      doc.text(` ${this.contrat.dateDebut}`, rightColumnX, 50);
 
 
       doc.setFontSize(14);
       doc.setFont('helvetica', 'bolditalic');
-      doc.text('Date Fin:', rightColumnX, 120);
+      doc.text('Date Fin:', leftColumnX, 60);
       doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
-      doc.text(` ${this.contrat.dateFin}`, rightColumnX, 120);
+      doc.text(` ${this.contrat.dateFin}`, rightColumnX, 60);
 
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bolditalic');
+      doc.text('Contrat Type:', leftColumnX, 70);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(12);
+      doc.text(` ${this.contrat.typeContrat}`, rightColumnX, 70);
 
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bolditalic');
+      doc.text('Montant:', leftColumnX, 80);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(12);
+      doc.text(` ${this.contrat.montant}`, rightColumnX, 80);
       // Add equipment details if applicable
-      if (this.contrat.hasEquipment === true) {
+    /*  if (this.contrat.hasEquipment === true) {
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bolditalic');
         doc.text('Equipment Details:', leftColumnX, 130);
@@ -144,10 +160,10 @@ export class ContratComponent {
         doc.setFontSize(12);
         doc.setFont('helvetica', 'normal');
         doc.text(`Non`, rightColumnX, 130);
-      }
+      }*/
 
       // Add N_appart_Totale and N_appart_To_have details if applicable
-      if (this.contrat.idProperty.type === 'Appartement') {
+     /* if (this.contrat.idProperty.type === 'Appartement') {
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bolditalic');
         doc.text('Appartement Details:', leftColumnX, 150);
@@ -167,8 +183,8 @@ export class ContratComponent {
         doc.setFontSize(12);
         doc.setFont('helvetica', 'normal');
         doc.text(`${this.contrat.idProperty.type}`, 15, 170);
-      }
-      if (this.contrat.idProperty.type === 'House') {
+      }*/
+   /*   if (this.contrat.idProperty.type === 'House') {
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bolditalic');
         doc.text('Maison Details:', leftColumnX, 120);
@@ -180,7 +196,7 @@ export class ContratComponent {
         doc.setFontSize(12);
         doc.setFont('helvetica', 'normal');
         doc.text(`${this.contrat.idProperty.bedrooms}`, rightColumnX, 140);
-      }
+      }*/
      /* if (this.contrat.idProperty.type === 'Terrain') {
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bolditalic');
@@ -204,13 +220,14 @@ export class ContratComponent {
       // Create a link to download the PDF file
       const link = document.createElement('a');
       link.href = pdfUrl;
-      link.download = `Contract-${this.contrat.idContrat}-${this.contrat.idProperty.id}.pdf`;
+      link.download = `Contract.pdf`;
       link.click();
 
       // Clean up
       URL.revokeObjectURL(pdfUrl);
 
     }
-    this.goToPropertyList();
-  }
+
+  // this.goToPropertyList();
+  //}
 }
