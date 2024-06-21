@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1")
-public class ContratController {
+public class ContratController {/*
     IContratService contratService;
     @PostMapping(path="/contrat")
     Contrat ajouterContrat(@RequestBody Contrat contrat){
@@ -46,4 +46,4 @@ public class ContratController {
     List<Contrat> getAllContratbyType(@PathVariable TypeContrat type){return contratService.GetAllContratByType(type);}
     @PutMapping(path="/contrat")
     Contrat updateContrat(@RequestBody Contrat contrat){return contratService.UpdateContrat(contrat);}
-}
+*/}

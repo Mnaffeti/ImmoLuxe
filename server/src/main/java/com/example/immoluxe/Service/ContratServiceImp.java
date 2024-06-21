@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
-public class ContratServiceImp implements IContratService {
+public class ContratServiceImp {/*implements IContratService {
     ContratRepository contratRep ;
     @Override
     public Contrat AddContrat(Contrat contrat) {
@@ -54,6 +54,22 @@ public class ContratServiceImp implements IContratService {
     public Contrat UpdateContrat(Contrat contrat ) {
         return contratRep.save(contrat);
     }
+
+    @Override
+    public User GetClientByIdContrat(Long id) {
+        return null;
+    }
+
+    @Override
+    public User GetProprietaireByIdContrat(Long id) {
+        return null;
+    }
+
+    @Override
+    public User GetAgentByIdContrat(Long id) {
+        return null;
+    }
+
     /*
     @Override
     public User GetClientByIdContrat(Long id) {
@@ -70,12 +86,12 @@ public class ContratServiceImp implements IContratService {
         return contratRep.findById(id).get().getAgent();
     }
 
-     */
+
     @Override
     public boolean deleteContratById(Long id) {
         return contratRep.findById(id).map(contrat -> {
             contratRep.delete(contrat);
             return true;
         }).orElse(false);
-    }
+    }*/
 }

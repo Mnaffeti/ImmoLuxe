@@ -26,6 +26,9 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { UpdatePropertyComponent } from './update-properties/update-properties.component';
 import { ShowDetailsComponent } from './show-details/show-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ContratComponent } from './contrat/contrat.component';
+import { ContratListComponent } from './contrat-list/contrat-list.component';
+import { ShowDetailsContratComponent } from './show-details-contrat/show-details-contrat.component';
 
 
 
@@ -39,11 +42,14 @@ export function kcFactory(kcServcie: KeycloakService) {
     AppComponent,
     MenuComponent,
     PropertyListComponent,
-    
+
     AddPropertyComponent,
     UpdatePropertyComponent,
          ShowDetailsComponent,
-         
+         ContratComponent,
+         ContratListComponent,
+         ShowDetailsContratComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -51,10 +57,10 @@ export function kcFactory(kcServcie: KeycloakService) {
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule,FormsModule,HomeComponent, BrowserAnimationsModule , 
+    HttpClientModule,FormsModule,HomeComponent, BrowserAnimationsModule ,
     MatFormFieldModule, MatInputModule,MatFormFieldModule, MatInputModule, MatDatepickerModule,
      MatNativeDateModule
-  ],  
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -62,7 +68,7 @@ export function kcFactory(kcServcie: KeycloakService) {
       multi: true
     }, {
       provide: APP_INITIALIZER,
-      
+
       deps: [KeycloakService],
       useFactory: kcFactory,
       multi: true
