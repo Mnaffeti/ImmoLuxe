@@ -65,17 +65,18 @@ export class ContratComponent {
       doc.setFontSize(24);
     doc.text(`CONTRACT DE ${this.contrat.typeContrat}`.toUpperCase(), 50, 20);
 
-      /*Date de creation*/
+      /*Date de creation*//*
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
     doc.text('Tunis le : ', 5, 5);
-    const createDate = new Date(this.contrat.createdDate);
+    let createDate: any;
+    createDate = Date(this.contrat.createdDate);
     const formattedDate = createDate.toLocaleDateString('fr-FR', {
       year: 'numeric',
       month: '2-digit',
       day: '2-digit'
     }).replace(/\//g, '-');
-    doc.text(` ${formattedDate}`, 15, 5);
+    doc.text(` ${formattedDate}`, 15, 5);*/
 
       // Add contract details in two columns
       const columnWidth = 90;

@@ -24,9 +24,9 @@ export class Contrat {
     this.idClient = 0;
     this.idProprietaire = 0;
     this.idProperty = new Property();*/
-    this.dateDebut = new Date;
-    this.dateFin ;
-    this.createdDate;
+    this.dateDebut =  Date;
+    this.dateFin  =  Date;
+    this.createdDate =  Date;
     this.typeContrat = 0;
     this.montant = 0;
     this.proprietaire="Douaa ZAOUI";
