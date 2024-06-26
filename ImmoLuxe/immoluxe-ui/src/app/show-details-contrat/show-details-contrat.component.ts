@@ -24,4 +24,5 @@ export class ShowDetailsContratComponent {
       this.contrat = data;
     });
   }
+
 }

@@ -16,6 +16,7 @@ export class Contrat {
   client!: string;
   adresse!: string;
   compose!: string;
+  but!: string;
   //description!: string;
   // hasEquipment!: boolean;
   // equipements!: string;
@@ -34,6 +35,7 @@ export class Contrat {
     this.client="Aziz NAFFETI";
     this.adresse="Tunis Arianna";
     this.compose="2 Chambres";
+    this.but="Inconnu";
 
     /*this.hasEquipment = false;
     this.equipements = "";
