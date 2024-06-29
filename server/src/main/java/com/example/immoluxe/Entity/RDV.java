@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -17,8 +18,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RDV extends BaseEntity {
-    String description;
-    private Date date;
-    private Date time;
-
-}
+    private String description;
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDate dateHeure;
+    private String statut;
+}}

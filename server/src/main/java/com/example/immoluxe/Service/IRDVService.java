@@ -6,10 +6,8 @@ import java.util.List;
 
 public interface IRDVService {
     RDV AddRdv(RDV rdv);
-
-    List<RDV> getRdvById(Long id);
-
-    RDV updateRdv(Long id, RDV rdv);
-
-    void deleteRdv(Long id);
+    List<RDV> findAll();
+    RDV findById(int id);
+    RDV updateRdv(int id, RDV rdv);
+    void deleteById(int id);
 }

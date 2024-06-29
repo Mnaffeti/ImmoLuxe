@@ -10,33 +10,35 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 public class RDVServiceImp implements IRDVService {
-    RDVRepository rdvRepo;
+    private final RDVRepository rdvRepo;
+
     @Override
     public RDV AddRdv(RDV rdv) {
         return rdvRepo.save(rdv);
     }
-    public List<RDV> getAllRdvs() {
+
+    @Override
+    public List<RDV> findAll() {
         return rdvRepo.findAll();
     }
 
     @Override
-    public List<RDV> getRdvById(Long id) {
-        return rdvRepo.findAll();
+    public RDV findById(int id) {
+        return rdvRepo.findById(id).orElse(null);
     }
 
     @Override
-    public RDV updateRdv(Long id, RDV rdv) {
-        if (!rdvRepo.existsById(Math.toIntExact(id))) {
-            return null; // Or throw an exception if you prefer
+    public RDV updateRdv(int id, RDV rdv) {
+        RDV existingRdv = rdvRepo.findById(id).orElse(null);
+        if (existingRdv != null) {
+            rdv.setId(id);
+            return rdvRepo.save(rdv);
         }
-        rdv.setId(Math.toIntExact(id));
-        return rdvRepo.save(rdv);
+        return null;
     }
 
     @Override
-    public void deleteRdv(Long id) {
-        if (rdvRepo.existsById(Math.toIntExact(id))) {
-            rdvRepo.deleteById(Math.toIntExact(id));
-        }
+    public void deleteById(int id) {
+        rdvRepo.deleteById(id);
     }
 }
