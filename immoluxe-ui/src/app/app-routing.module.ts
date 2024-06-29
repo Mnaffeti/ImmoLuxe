@@ -9,6 +9,9 @@ import { UpdatePropertyComponent } from './update-properties/update-properties.c
 import { ShowDetailsComponent } from './show-details/show-details.component';
 import { ContratComponent } from './contrat/contrat.component'
 import {ShowDetailsContratComponent} from './show-details-contrat/show-details-contrat.component'
+import {DashboardComponent} from './admin/components/dashboard/dashboard.component'
+
+
 
 
 const routes: Routes = [
@@ -19,6 +22,7 @@ const routes: Routes = [
   {path:'updating-by-id/:id',component:UpdatePropertyComponent},
   {path:'details-of-properties/:id',component:ShowDetailsComponent},
   {path:'details-of-contrat/:id',component:ShowDetailsContratComponent},
+  {path:'dashboard',component:DashboardComponent},
   {path:'home',component:HomeComponent},
   {
     path: '',
