@@ -10,6 +10,10 @@ import { ShowDetailsComponent } from './show-details/show-details.component';
 import { ContratComponent } from './contrat/contrat.component'
 import {ShowDetailsContratComponent} from './show-details-contrat/show-details-contrat.component'
 import {UpdateContratComponent} from './update-contrat/update-contrat.component'
+import {DashboardComponent} from './admin/components/dashboard/dashboard.component'
+
+
+
 
 const routes: Routes = [
   {path:"show-all-properties",component: PropertyListComponent},
@@ -20,6 +24,7 @@ const routes: Routes = [
   {path:'updating-contrat-by-id/:id',component:UpdateContratComponent},
   {path:'details-of-properties/:id',component:ShowDetailsComponent},
   {path:'details-of-contrat/:id',component:ShowDetailsContratComponent},
+  {path:'dashboard',component:DashboardComponent},
   {path:'home',component:HomeComponent},
   {
     path: '',
