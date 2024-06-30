@@ -19,7 +19,4 @@ public class ImmoLuxeApplication {
         SpringApplication.run(ImmoLuxeApplication.class, args);
 
     }
-
-
-
 }

@@ -20,12 +20,11 @@
 
       <thead class="table-dark ">
       <tr>
-        <th>IdContrat</th>
         <th>IdAgent</th>
-        <th>IdProprietaire</th>
-        <th>IdClient</th>
-        <th>IdProperty</th>
-        <th>Address</th>
+        <th>Montant</th>
+        <th>Date Debut</th>
+        <th>Date Fin</th>
+        <th>TypeContrat</th>
       </tr>
 
       </thead>
@@ -33,16 +32,16 @@
 
       <tbody>
       <tr *ngFor = "let contrat of contrats">
-        <td>{{contrat.idContrat}}</td>
-        <td>{{contrat.idAgent}}</td>
-        <td>{{contrat.idProprietaire}}</td>
-        <td>{{contrat.idClient}}</td>
-        <td>{{contrat.idProperty}}</td>
-        <td>{{contrat.idProperty.address}}</td>
+        <td>{{contrat.createdBy}}</td>
+        <td>{{contrat.montant}}</td>
+        <td>{{contrat.dateDebut}}</td>
+        <td>{{contrat.dateFin}}</td>
+        <td>{{contrat.typeContrat}}</td>
         <td>
-          <button (click) = "updateContrat(contrat.idContrat)" class = "btn  btn-secondary btn-sm"> Update</button>
-          <button (click) = "deleteContrat(contrat.idContrat)" class = "btn btn-danger btn-sm" style="margin-left: 10px"> Delete</button>
-          <button (click) = "detailsOfContrat(contrat.idContrat)" class = "btn btn-success btn-sm " style="margin-left: 10px"> View</button>
+          <button (click) = "updateContrat(contrat.id)" class = "btn  btn-secondary btn-sm"> Update</button>
+          <button (click) = "deleteContrat(contrat.id)" class = "btn btn-danger btn-sm" style="margin-left: 10px"> Delete</button>
+          <button (click) = "detailsOfContrat(contrat.id)" class = "btn btn-success btn-sm " style="margin-left: 10px"> View</button >
+        <button (click) = " detailsOfContrat(contrat.id)" class = "btn btn-primary btn-sm " style="margin-left: 10px"> Download</button>
         </td>
       </tr>
       </tbody>

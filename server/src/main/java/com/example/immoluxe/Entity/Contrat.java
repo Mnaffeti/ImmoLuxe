@@ -16,32 +16,14 @@ import java.sql.Date;
 @NoArgsConstructor
 
 public class Contrat extends BaseEntity {
-   // @Id
-   // @GeneratedValue
-   // Long idContrat;
 
-/*
-    @ManyToOne
-    @JoinColumn(name = "id_client")
-    User client;
-
-    @ManyToOne
-    @JoinColumn(name = "id_agent")
-    User agent;
-
-    @ManyToOne
-    @JoinColumn(name = "id_proprietaire")
-    User proprietaire;
-
-    @ManyToOne
-    @JoinColumn(name = "id_property")
-    Property property;
-*/
     @Enumerated(EnumType.STRING)
     TypeContrat typeContrat;
 
     Date dateDebut;
+
     Date dateFin;
+
     double montant;
 }
 

@@ -32,7 +32,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContratComponent } from './contrat/contrat.component';
 import { ContratListComponent } from './contrat-list/contrat-list.component';
 import { ShowDetailsContratComponent } from './show-details-contrat/show-details-contrat.component';
+
+import { UpdateContratComponent } from './update-contrat/update-contrat.component';
+
 import {DashboardComponent} from "./admin/components/dashboard/dashboard.component";
+
 
 
 
@@ -53,6 +57,9 @@ export function kcFactory(kcServcie: KeycloakService) {
          ContratComponent,
          ContratListComponent,
          ShowDetailsContratComponent,
+
+         UpdateContratComponent,
+
     DashboardComponent
 
 

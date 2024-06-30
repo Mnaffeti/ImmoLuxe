@@ -31,7 +31,7 @@ export class ContratListComponent {
   }
 
   updateContrat(id: number) {
-    this.router.navigate(['updating-by-id', id]);
+    this.router.navigate(['updating-contrat-by-id', id]);
   }
 
   deleteContrat(id: number) {

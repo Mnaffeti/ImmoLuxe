@@ -19,7 +19,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Property extends BaseEntity {
 
-
  private String adresse;
  private String type;
  private double price;
