@@ -12,14 +12,15 @@ import { Router } from '@angular/router';
 	imports: [NgbCarouselModule]
 })
 export class HomeComponent {
-  
+
   constructor(
-   
-    private router: Router) { 
-      
+
+    private router: Router) {
+
     }
   goToEmployeeList(){
     this.router.navigate(['/show-all-properties']);
+    this.router.navigate(['/show-all-contrats']);
   }
   // images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/2000/600`);
 

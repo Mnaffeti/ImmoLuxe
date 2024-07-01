@@ -1,31 +1,23 @@
 package com.example.immoluxe.Entity;
 
+import com.example.immoluxe.Common.BaseEntity;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name="properties_table")
-public class Property {
-
- public Property() {}
-
- public Property(String adresse, String type, double price, int bedrooms, int bathrooms, double area, String description) {
-  this.adresse = adresse;
-  this.type = type;
-  this.price = price;
-  this.bedrooms = bedrooms;
-  this.bathrooms = bathrooms;
-  this.area = area;
-  this.description = description;
- }
-
- @Id
- @GeneratedValue(strategy = GenerationType.IDENTITY)
- private Long id;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class Property extends BaseEntity {
 
  private String adresse;
  private String type;
@@ -35,53 +27,4 @@ public class Property {
  private double area;
  private String description;
 
- // getters and setters
- public Long getId() {
-  return id;
- }
- public void setId(Long id) {
-  this.id = id;
- }
- public String getAdresse() {
-  return adresse;
- }
- public void setAdresse(String adresse) {
-  this.adresse = adresse;
- }
- public String getType() {
-  return type;
- }
- public void setType(String type) {
-  this.type = type;
- }
- public double getPrice() {
-  return price;
- }
- public void setPrice(double price) {
-  this.price = price;
- }
- public int getBedrooms() {
-  return bedrooms;
- }
- public void setBedrooms(int bedrooms) {
-  this.bedrooms = bedrooms;
- }
- public int getBathrooms() {
-  return bathrooms;
- }
- public void setBathrooms(int bathrooms) {
-  this.bathrooms = bathrooms;
- }
- public double getArea() {
-  return area;
- }
- public void setArea(double area) {
-  this.area = area;
- }
- public String getDescription() {
-  return description;
- }
- public void setDescription(String description) {
-  this.description = description;
- }
 }
