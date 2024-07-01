@@ -14,4 +14,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RDV extends BaseEntity {
     String description;
+    String NomRDVOwner ;
 }

@@ -19,7 +19,7 @@
     <ul class="navbar-nav ms-auto">
         <li class="nav-item" style="margin-right: 4rem;">
             <a routerLink="login" routerLinkActive="active" class="nav-link">Admin Login
-                <span  class="logout-option" id="logoutOption"><a routerLink="" routerLinkActive="active" class="nav-link">Logout</a></span>
+                <span  class="logout-option" id="logoutOption"><a routerLink="" (click)="onLogout()"  routerLinkActive="active" class="nav-link">Logout</a></span>
             </a>
         </li>
     </ul>
