@@ -7,6 +7,7 @@ import com.example.immoluxe.Service.IContratService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Type;
@@ -49,6 +50,11 @@ public class ContratController {
 
     return contratService.deleteContrat(id);
     }
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping(path="/username")
+    String getUserName(Authentication con){
+        return  contratService.getUserName(con);}
+
 
     /*
     @DeleteMapping("/contrat")
