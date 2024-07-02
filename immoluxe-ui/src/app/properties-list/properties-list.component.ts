@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Property } from '../properties';
 import { PropertyService } from '../properties.service';
-import { FormsModule } from '@angular/forms'
 import { Router } from '@angular/router';
 
 @Component({

@@ -1,4 +1,4 @@
-export class Property {
+export class  Property {
   id!: number;
   address!: string;
   type!: string;

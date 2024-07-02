@@ -9,8 +9,6 @@ import { HttpTokenInterceptor } from './services/http-interceptor/http-token.int
 import { MenuComponent } from './components/menu/menu.component';
 import { HomeComponent } from './pages/home/home.component';
 
-
-
 import { HttpClientModule } from '@angular/common/http'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PropertyListComponent } from './properties-list/properties-list.component';
@@ -22,13 +20,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatNativeDateModule} from '@angular/material/core';
 
-
 import { UpdatePropertyComponent } from './update-properties/update-properties.component';
 import { ShowDetailsComponent } from './show-details/show-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-
-
 
 export function kcFactory(kcServcie: KeycloakService) {
   return () => kcServcie.init();
@@ -39,21 +33,22 @@ export function kcFactory(kcServcie: KeycloakService) {
     AppComponent,
     MenuComponent,
     PropertyListComponent,
-    
     AddPropertyComponent,
     UpdatePropertyComponent,
-         ShowDetailsComponent,
-         
+    ShowDetailsComponent,
+    HomeComponent // Declare HomeComponent here
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserModule,
-    AppRoutingModule,
     NgbModule,
-    HttpClientModule,FormsModule,HomeComponent, BrowserAnimationsModule , 
-    MatFormFieldModule, MatInputModule,MatFormFieldModule, MatInputModule, MatDatepickerModule,
-     MatNativeDateModule
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],  
   providers: [
     {
@@ -62,7 +57,6 @@ export function kcFactory(kcServcie: KeycloakService) {
       multi: true
     }, {
       provide: APP_INITIALIZER,
-      
       deps: [KeycloakService],
       useFactory: kcFactory,
       multi: true
