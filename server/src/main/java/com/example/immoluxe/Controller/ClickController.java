@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/clicks")
+@RequestMapping("/api/v1/clicks")
 public class ClickController {
 
     @Autowired
@@ -23,8 +23,8 @@ public class ClickController {
     private PropertyRepository propertyRepository;
 
     // Create a new click
-    @PostMapping
-    public ResponseEntity<Click> createClick(@RequestParam Long propertyId) {
+    @GetMapping("/add/{propertyId}")
+    public ResponseEntity<Click> createClick(@PathVariable Long propertyId) {
         Optional<Property> propertyOpt = propertyRepository.findById(propertyId);
         if (!propertyOpt.isPresent()) {
             return ResponseEntity.badRequest().build();

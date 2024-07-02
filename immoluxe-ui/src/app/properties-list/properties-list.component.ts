@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Property } from '../properties';
 import { PropertyService } from '../properties.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-property-list',
@@ -13,7 +14,7 @@ export class PropertyListComponent {
   properties: Property[];
   EnteredID!: number;
 
-  constructor(private propertyService: PropertyService, private router: Router) {
+  constructor(private propertyService: PropertyService, private router: Router,private http: HttpClient) {
     this.properties = [];
   }
 
@@ -44,6 +45,13 @@ export class PropertyListComponent {
   }
 
   detailsOfProperty(id: number) {
+    // http request to send clicks
+    this.http.get<any>('http://localhost:8080/api/v1/clicks/add/' + id).subscribe(data => {
+      console.log('Click sent:', data);
+    }, error => {
+      console.error('Error sending click:', error);
+    });
+
     this.router.navigate(['details-of-properties', id]);
   }
 }

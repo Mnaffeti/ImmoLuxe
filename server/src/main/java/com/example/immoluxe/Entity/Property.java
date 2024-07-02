@@ -1,5 +1,6 @@
 package com.example.immoluxe.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class Property {
  private String description;
 
  @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
+ @JsonIgnore
  private List<Click> clicks;
 
  // getters and setters
