@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Property } from '../properties';
 import { PropertyService } from '../properties.service';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-add-properties',
@@ -23,9 +22,7 @@ export class AddPropertyComponent implements OnInit {
     const formData = new FormData();
     
     // Append photo file if selected
-    if (this.property.photo) {
-      formData.append('photo', this.property.photo);
-    }
+
 
     // Append other property data
     formData.append('type', this.property.type);

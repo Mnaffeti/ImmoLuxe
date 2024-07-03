@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,9 +27,27 @@ public class PropertyController {
     }
 
     //create property
-    @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/properties")
-    public Property createProperty(@RequestBody Property property) {
+    public Property createProperty(@RequestParam("type") String type,
+                                   @RequestParam("bedrooms") int bedrooms,
+                                   @RequestParam("price") double price,
+                                   @RequestParam("bathrooms") int bathrooms,
+                                   @RequestParam("area") int area,
+                                   @RequestParam("description") String description
+                                  // @RequestParam("photo") MultipartFile photo
+    ) {
+        Property property = new Property();
+        property.setType(type);
+        property.setBedrooms(bedrooms);
+        property.setPrice(price);
+        property.setBathrooms(bathrooms);
+        property.setArea(area);
+        property.setDescription(description);
+
+        // Handle file saving here
+        // Example: String fileName = photo.getOriginalFilename();
+        // Save the file somewhere and set the file path to the property
+
         return propertyRepository.save(property);
     }
 
