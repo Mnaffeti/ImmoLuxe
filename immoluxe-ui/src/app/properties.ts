@@ -1,4 +1,4 @@
-export class  Property {
+export class Property {
   id!: number;
   address!: string;
   type!: string;
@@ -7,14 +7,15 @@ export class  Property {
   bathrooms!: number;
   area!: number;
   description!: string;
+  photo?: File; // Add a photo property
 
-constructor() {
-  this.address = "";
-  this.type = "";
-  this.price = 0;
-  this.bedrooms = 0;
-  this.bathrooms = 0;
-  this.area = 0;
-  this.description = "";
-}
+  constructor() {
+    this.address = '';
+    this.type = '';
+    this.price = 0;
+    this.bedrooms = 0;
+    this.bathrooms = 0;
+    this.area = 0;
+    this.description = '';
+  }
 }

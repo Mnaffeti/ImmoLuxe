@@ -20,12 +20,28 @@ export class AddPropertyComponent implements OnInit {
   ngOnInit(): void {}
 
   saveProperty() {
-    this.propertyService.addProperty(this.property).subscribe(
+    const formData = new FormData();
+    
+    // Append photo file if selected
+    if (this.property.photo) {
+      formData.append('photo', this.property.photo);
+    }
+
+    // Append other property data
+    formData.append('type', this.property.type);
+    formData.append('bedrooms', this.property.bedrooms.toString());
+    formData.append('address', this.property.address);
+    formData.append('price', this.property.price.toString());
+    formData.append('bathrooms', this.property.bathrooms.toString());
+    formData.append('area', this.property.area.toString());
+    formData.append('description', this.property.description);
+
+    this.propertyService.addProperty(formData).subscribe(
       data => {
-        console.log(data);
+        console.log('Property added successfully:', data);
         this.goToPropertyList();
       },
-      error => console.log(error)
+      error => console.error('Error adding property:', error)
     );
   }
 
@@ -34,11 +50,18 @@ export class AddPropertyComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.property);
+    console.log('Submitting property:', this.property);
     this.saveProperty();
   }
 
   onCancel() {
     this.router.navigate(['/show-all-properties']);
+  }
+
+  onFileSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement?.files && inputElement.files.length > 0) {
+      this.property.photo = inputElement.files[0];
+    }
   }
 }

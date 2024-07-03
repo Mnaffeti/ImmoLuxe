@@ -53,11 +53,18 @@
           <input matInput type="number" [(ngModel)]="property.area" name="area" required #area="ngModel" [ngClass]="{ 'is-invalid': f.submitted && area.errors }">
           <mat-error *ngIf="f.submitted && area.errors?.['required']">Area is required</mat-error>
         </mat-form-field>
+
+
   
         <mat-form-field class="full-width" style="margin: 20px;">
           <mat-label>Description</mat-label>
           <textarea matInput [(ngModel)]="property.description" name="description" required #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.errors }"></textarea>
         <mat-error *ngIf="f.submitted && description.errors?.['required']">Description is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" style="margin: 20px;">
+            <mat-label>Photo</mat-label>
+            <input matInput type="file" name="photo" accept="image/*" (change)="onFileSelected($event)" style="margin-top: 10px;">
         </mat-form-field>
   
         <div class="button-group" style="margin: 20px;">
