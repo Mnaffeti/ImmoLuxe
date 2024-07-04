@@ -42,3 +42,26 @@ select{
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
 }
+
+
+.card {
+  border: 1px solid #000000;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 20px;
+}
+.p1 {
+  margin-bottom: 20px; /* add this line */
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
+  margin-right: 10px;
+}
+
+label {
+  font-size: 1em;
+}
