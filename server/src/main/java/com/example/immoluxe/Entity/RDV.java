@@ -22,4 +22,4 @@ public class RDV extends BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDate dateHeure;
     private String statut;
-}}
+}
