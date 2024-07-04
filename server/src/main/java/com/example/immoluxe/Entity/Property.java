@@ -10,7 +10,7 @@ public class Property {
 
  public Property() {}
 
- public Property(String adresse, String type, double price, int bedrooms, int bathrooms, double area, String description) {
+ public Property(String adresse, String type, double price, int bedrooms, int bathrooms, double area, String description, String photoUrl) {
   this.adresse = adresse;
   this.type = type;
   this.price = price;
@@ -18,6 +18,7 @@ public class Property {
   this.bathrooms = bathrooms;
   this.area = area;
   this.description = description;
+  this.photoUrl = photoUrl;
  }
 
  @Id
@@ -31,6 +32,7 @@ public class Property {
  private int bathrooms;
  private double area;
  private String description;
+ private String photoUrl;  // new field for the photo URL
 
  @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
  @JsonIgnore
@@ -99,6 +101,20 @@ public class Property {
 
  public void setDescription(String description) {
   this.description = description;
+ }
+
+ public String getPhotoUrl() {
+  return photoUrl;
+ }
+
+ public void setPhotoUrl(String photoUrl) {
+  this.photoUrl = photoUrl;
+ }
+
+ public void setFullPhotoUrl(String baseUrl) {
+  if (this.photoUrl != null) {
+   this.photoUrl = baseUrl + this.photoUrl;
+  }
  }
 
  public List<Click> getClicks() {

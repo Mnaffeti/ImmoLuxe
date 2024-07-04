@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +25,8 @@ public class ClickController {
 
     @Autowired
     private PropertyRepository propertyRepository;
+
+    private static final String UPLOAD_DIR = "uploads/";
 
     // Create a new click
     @GetMapping("/add/{propertyId}")
@@ -42,15 +48,23 @@ public class ClickController {
         return clickRepository.findAll();
     }
 
+
     // Get clicks by property ID
     @GetMapping("/property/{propertyId}")
     public ResponseEntity<List<Click>> getClicksByPropertyId(@PathVariable Long propertyId) {
         Optional<Property> propertyOpt = propertyRepository.findById(propertyId);
-        if (!propertyOpt.isPresent()) {
+        if (propertyOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
         List<Click> clicks = clickRepository.findByProperty(propertyOpt.get());
         return ResponseEntity.ok(clicks);
+    }
+
+    @GetMapping("/files/{fileName}")
+    public ResponseEntity<byte[]> getFile(@PathVariable String fileName) throws IOException {
+        Path path = Paths.get(UPLOAD_DIR + fileName);
+        byte[] fileContent = Files.readAllBytes(path);
+        return ResponseEntity.ok().body(fileContent);
     }
 }

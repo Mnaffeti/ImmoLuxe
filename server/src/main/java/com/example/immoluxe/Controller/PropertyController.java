@@ -8,6 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +23,8 @@ public class PropertyController {
 
     @Autowired
     private PropertyRepository propertyRepository;
+
+    private static final String UPLOAD_DIR = "uploads/";
 
     //get all properties
     @CrossOrigin(origins = "http://localhost:4200")
@@ -33,9 +40,9 @@ public class PropertyController {
                                    @RequestParam("price") double price,
                                    @RequestParam("bathrooms") int bathrooms,
                                    @RequestParam("area") int area,
-                                   @RequestParam("description") String description
-                                  // @RequestParam("photo") MultipartFile photo
-    ) {
+                                   @RequestParam("description") String description,
+                                   @RequestParam("photo") MultipartFile photo) throws IOException {
+
         Property property = new Property();
         property.setType(type);
         property.setBedrooms(bedrooms);
@@ -44,9 +51,15 @@ public class PropertyController {
         property.setArea(area);
         property.setDescription(description);
 
-        // Handle file saving here
-        // Example: String fileName = photo.getOriginalFilename();
-        // Save the file somewhere and set the file path to the property
+        // Handle file saving
+        if (!photo.isEmpty()) {
+            String fileName = System.currentTimeMillis() + "_" + photo.getOriginalFilename();
+            Path path = Paths.get(UPLOAD_DIR + fileName);
+            Files.createDirectories(path.getParent());
+            Files.write(path, photo.getBytes());
+            String photoUrl = "/api/v1/clicks/files/" + fileName;
+            property.setPhotoUrl(photoUrl);
+        }
 
         return propertyRepository.save(property);
     }
@@ -63,17 +76,34 @@ public class PropertyController {
     //update property
     @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/properties/{id}")
-    public ResponseEntity<Property> updatePropertyByID(@PathVariable Long id, @RequestBody Property propertyDetails){
+    public ResponseEntity<Property> updatePropertyByID(@PathVariable Long id,
+                                                       @RequestParam("type") String type,
+                                                       @RequestParam("bedrooms") int bedrooms,
+                                                       @RequestParam("price") double price,
+                                                       @RequestParam("bathrooms") int bathrooms,
+                                                       @RequestParam("area") int area,
+                                                       @RequestParam("description") String description,
+                                                       @RequestParam("photo") MultipartFile photo) throws IOException {
+
         Property property = propertyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Property with id "+id+" does not exist"));
 
-        property.setAdresse(propertyDetails.getAdresse());
-        property.setType(propertyDetails.getType());
-        property.setPrice(propertyDetails.getPrice());
-        property.setBedrooms(propertyDetails.getBedrooms());
-        property.setBathrooms(propertyDetails.getBathrooms());
-        property.setArea(propertyDetails.getArea());
-        property.setDescription(propertyDetails.getDescription());
+        property.setType(type);
+        property.setBedrooms(bedrooms);
+        property.setPrice(price);
+        property.setBathrooms(bathrooms);
+        property.setArea(area);
+        property.setDescription(description);
+
+        // Handle file saving
+        if (!photo.isEmpty()) {
+            String fileName = System.currentTimeMillis() + "_" + photo.getOriginalFilename();
+            Path path = Paths.get(UPLOAD_DIR + fileName);
+            Files.createDirectories(path.getParent());
+            Files.write(path, photo.getBytes());
+            String photoUrl = "/api/v1/files/" + fileName;
+            property.setPhotoUrl(photoUrl);
+        }
 
         Property updatedProperty = propertyRepository.save(property);
 
@@ -93,4 +123,9 @@ public class PropertyController {
         response.put("Deleted", Boolean.TRUE);
         return ResponseEntity.ok(response);
     }
+
+    // endpoint to serve files
+
+
+
 }

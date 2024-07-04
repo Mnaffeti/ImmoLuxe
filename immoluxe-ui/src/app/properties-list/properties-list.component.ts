@@ -13,8 +13,9 @@ export class PropertyListComponent {
 
   properties: Property[];
   EnteredID!: number;
+  baseUrl: string = 'http://localhost:8080'; // Base URL for the backend
 
-  constructor(private propertyService: PropertyService, private router: Router,private http: HttpClient) {
+  constructor(private propertyService: PropertyService, private router: Router, private http: HttpClient) {
     this.properties = [];
   }
 
@@ -28,7 +29,7 @@ export class PropertyListComponent {
   }
 
   getProperties() {
-    this.propertyService.getPropertiesList().subscribe(data => {this.properties = data;});
+    this.propertyService.getPropertiesList().subscribe(data => { this.properties = data; });
   }
 
   updateProperty(id: number) {
@@ -36,11 +37,11 @@ export class PropertyListComponent {
   }
 
   deleteProperty(id: number) {
-    if(confirm("Are you sure to delete Property ID: "+id)) {
-      this.propertyService.deleteProperty(id).subscribe( data => {
+    if (confirm("Are you sure to delete Property ID: " + id)) {
+      this.propertyService.deleteProperty(id).subscribe(data => {
         console.log(data);
         this.getProperties();
-      })
+      });
     }
   }
 

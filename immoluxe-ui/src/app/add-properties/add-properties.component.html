@@ -59,6 +59,10 @@
         <mat-error *ngIf="f.submitted && description.errors?.['required']">Description is required</mat-error>
       </mat-form-field>
 
+      <div class="full-width" style="margin: 20px;">
+        <input type="file" (change)="onFileSelected($event)">
+      </div>
+
       <div class="button-group" style="margin: 20px;">
         <button mat-raised-button color="primary" type="submit" style="margin: 20px;">Submit</button>
         <button mat-raised-button color="warn" type="button" (click)="onCancel()" style="margin: 20px;">Cancel</button>

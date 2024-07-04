@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AddPropertyComponent implements OnInit {
   property: Property = new Property();
+  selectedFile: File | null = null;
 
   constructor(
     private propertyService: PropertyService,
@@ -22,7 +23,9 @@ export class AddPropertyComponent implements OnInit {
     const formData = new FormData();
     
     // Append photo file if selected
-
+    if (this.selectedFile) {
+      formData.append('photo', this.selectedFile);
+    }
 
     // Append other property data
     formData.append('type', this.property.type);
@@ -58,7 +61,7 @@ export class AddPropertyComponent implements OnInit {
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement?.files && inputElement.files.length > 0) {
-      this.property.photo = inputElement.files[0];
+      this.selectedFile = inputElement.files[0];
     }
   }
 }

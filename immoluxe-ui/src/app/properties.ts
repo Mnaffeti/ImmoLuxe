@@ -7,7 +7,7 @@ export class Property {
   bathrooms!: number;
   area!: number;
   description!: string;
-  photo?: File; // Add a photo property
+  photoUrl?: string; // Add a photo property
 
   constructor() {
     this.address = '';
