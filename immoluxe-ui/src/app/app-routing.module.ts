@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+                                                                                                                                                                import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { authGuard } from './services/guard/auth.guard';
@@ -10,6 +10,7 @@ import { ShowDetailsComponent } from './show-details/show-details.component';
 import { ContratComponent } from './contrat/contrat.component'
 import {ShowDetailsContratComponent} from './show-details-contrat/show-details-contrat.component'
 import {UpdateContratComponent} from './update-contrat/update-contrat.component'
+
 
 const routes: Routes = [
   {path:"show-all-properties",component: PropertyListComponent},

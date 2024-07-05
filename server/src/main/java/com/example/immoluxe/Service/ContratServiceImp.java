@@ -5,9 +5,12 @@ import com.example.immoluxe.Entity.Property;
 import com.example.immoluxe.Entity.TypeContrat;
 import com.example.immoluxe.Entity.User;
 import com.example.immoluxe.Repository.ContratRepository;
+
 import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -60,6 +63,11 @@ public class ContratServiceImp implements IContratService {
         response.put("Deleted", Boolean.TRUE);
         return ResponseEntity.ok(response);
     }
+    public String getUserName(Authentication connecteduser){
+            Jwt jwt = (Jwt) connecteduser.getPrincipal();
+            return jwt.getClaimAsString("preferred_username");
+        }
+
 
 
 /*
