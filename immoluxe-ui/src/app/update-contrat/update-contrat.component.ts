@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Contrat} from "../contrats";
+import {Contrat, TypeContrat} from "../contrats";
 import {contratService} from "../contrat.service";
 import {ActivatedRoute, Router} from "@angular/router";
 
@@ -37,4 +37,6 @@ export class UpdateContratComponent {
   goToContratList() {
     this.router.navigate(['/show-all-contrats']);
   }
+
+    protected readonly TypeContrat = TypeContrat;
 }

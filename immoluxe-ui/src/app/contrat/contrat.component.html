@@ -12,7 +12,7 @@
           <option>Location</option>
         </select>
         <div *ngIf="f.submitted && propertyType.errors" class="invalid-feedback" id="propertyType-error">
-          <div *ngIf="propertyType.errors['required']">Property Type is required</div>
+          <div *ngIf="propertyType.errors['required']">Type Property est requis</div>
         </div>
       </div>
 
@@ -20,7 +20,7 @@
         <label><b>Date Début</b></label>
         <input type="date" class="form-control" [(ngModel)]="contrat.dateDebut" name="dateDebut" required #dateDebut="ngModel" [ngClass]="{ 'is-invalid': f.submitted && dateDebut.errors }">
         <div *ngIf="f.submitted && dateDebut.errors" class="invalid-feedback">
-          <div *ngIf="dateDebut.errors['required']">Date Début is required</div>
+          <div *ngIf="dateDebut.errors['required']">Date Début est requis</div>
         </div>
       </div>
 
@@ -31,8 +31,8 @@
         <input type="number" class="form-control" [(ngModel)]="contrat.montant" name="montant"
                required pattern="[1-9][0-9]*" #montant="ngModel" [ngClass]="{ 'is-invalid': f.submitted && montant.errors }">
         <div *ngIf="f.submitted && montant.errors" class="invalid-feedback">
-          <div *ngIf="montant.errors['required']">Montant is required</div>
-          <div *ngIf="montant.errors['pattern']">Montant must be a positive number</div>
+          <div *ngIf="montant.errors['required']">Montant est requis</div>
+          <div *ngIf="montant.errors['pattern']">Montant supérieur à zéro !</div>
         </div>
       </div>
 
@@ -40,52 +40,42 @@
         <label><b>Date Fin</b></label>
         <input type="date" class="form-control" [(ngModel)]="contrat.dateFin" name="dateFin" [disabled]="contrat.typeContrat === 'Vente'" required #dateFin="ngModel" [ngClass]="{ 'is-invalid': f.submitted && dateFin.errors }" [min]="contrat.dateDebut">
         <div *ngIf="f.submitted && dateFin.errors" class="invalid-feedback">
-          <div *ngIf="dateFin.errors['required']">Date Fin is required</div>
-          <div *ngIf="dateFin.value <= dateDebut.value">Date Fin must be after Date Début</div>
+          <div *ngIf="dateFin.errors['required']">Date Fin est requis</div>
+          <div *ngIf="dateFin.value <= dateDebut.value">Date Fin aprés Date Début !</div>
         </div>
       </div>
-      <div class="form-group col-md-12">
-        <label><b>Description</b></label>
-        <textarea class="form-control" [(ngModel)]="contrat.description" name="description"
-                  required #description="ngModel" [ngClass]="{ 'is-invalid': f.submitted && description.errors }"></textarea>
-        <div *ngIf="f.submitted && description.errors" class="invalid-feedback">
-          <div *ngIf="description.errors['required']">Description is required</div>
-        </div>
-      </div>
+
+
       <!-- Display paragraphs to be checked based on contract type -->
       <div *ngIf="contrat.typeContrat === TypeContrat.Vente">
         <div class="p1">
           <div class="card">
             <div class="card-body">
-              <input type="checkbox" [(ngModel)]="contrat.venteParagraph1" name="venteParagraph1" required>
-              <label>Un article de cette promesse doit prévoir une clause qui permet de récupérer toute ou partie des sommes versées lors de la promesse de vente en cas de refus du Gouverneur (Le refus est exceptionnel).
-              </label>
+              <input type="checkbox" [(ngModel)]="paragraphs.vente.paragraph1" name="venteParagraph1" >
+              <label>Un article de cette promesse doit prévoir une clause qui permet de récupérer toute ou partie des sommes versées lors de la promesse de vente en cas de refus du Gouverneur (Le refus est exceptionnel).</label>
             </div>
           </div>
         </div>
         <div class="p1">
           <div class="card">
             <div class="card-body">
-              <input type="checkbox" [(ngModel)]="contrat.venteParagraph2" name="venteParagraph1" required>
+              <input type="checkbox" [(ngModel)]="paragraphs.vente.paragraph2" name="venteParagraph2" required #venteParagraph2="ngModel" [ngClass]="{ 'is-invalid': f.submitted && venteParagraph2.errors }">
               <label>Le vendeur s'engage dans la promesse de vente à ne pas vendre son bien immobilier à une autre personne que l'acheteur étranger tant que l'autorisation n'est pas délivrée, il va donc perdre des opportunités de vente et il peut demander de garder une somme définie sur l'acompte versé.</label>
-
+              <div *ngIf="f.submitted && venteParagraph2.errors" class="invalid-feedback">
+                <div *ngIf="venteParagraph2.errors['required']">Veuillez cocher cette case</div>
+              </div>
             </div>
           </div>
         </div>
-
       </div>
 
       <div *ngIf="contrat.typeContrat === TypeContrat.Location">
         <div class="p1">
           <div class="card">
             <div class="card-body">
-              <input type="checkbox" [(ngModel)]="contrat.locationParagraph1" name="locationParagraph1" required>
+              <input type="checkbox" [(ngModel)]="paragraphs.location.paragraph1" name="locationParagraph1" >
               <label>Le propriétaire n'est pas responsable des dommages et pertes causés par l'eau qui s'écoule
-                des toits ou de l'étage supérieur du bâtiment. Le plaignant doit informer le plaignant par une
-                lettre écrite avec garantie de livraison ou un télégramme rédigé par un notaire.
-                Dans le cas où le remorquage se produit comme indiqué,le propriétaire doit prendre
-                l'initiative de l'annulation de ce cas dans un délai n'excédant pas trois jours à
-                compter de la date de notification.
+                des toits ou de l'étage supérieur du bâtiment.
               </label>
             </div>
           </div>
@@ -97,10 +87,10 @@
       <div class="p1">
         <div class="card">
           <div class="card-body">
-            <input type="checkbox" [(ngModel)]="contrat.generalParagraph1" name="generalParagraph1" required #generalParagraph1="ngModel" [ngClass]="{ 'is-invalid': f.submitted && generalParagraph1.errors }">
+            <input type="checkbox" [(ngModel)]="paragraphs.general.paragraph1" name="generalParagraph1" required #generalParagraph1="ngModel" [ngClass]="{ 'is-invalid': f.submitted && generalParagraph1.errors }">
             <label>Le présent contrat est résilié dès l'expiration de la période imposée, sans préavis de l'une des parties à l'autre.</label>
             <div *ngIf="f.submitted && generalParagraph1.errors" class="invalid-feedback">
-              <div *ngIf="generalParagraph1.errors['required']">Please check this box</div>
+              <div *ngIf="generalParagraph1.errors['required']">Veuillez cocher cette case</div>
             </div>
           </div>
         </div>
@@ -109,10 +99,10 @@
       <div class="p2">
         <div class="card">
           <div class="card-body">
-            <input type="checkbox" [(ngModel)]="contrat.generalParagraph2" name="generalParagraph2" required #generalParagraph2="ngModel" [ngClass]="{ 'is-invalid': f.submitted && generalParagraph2.errors }">
+            <input type="checkbox" [(ngModel)]="paragraphs.general.paragraph2" name="generalParagraph2" required #generalParagraph2="ngModel" [ngClass]="{ 'is-invalid': f.submitted && generalParagraph2.errors }">
             <label>Les honoraires des affaires sont à la charge du bénéficiaire, ainsi que toutes les prestations municipales, à l'exception de la prestation de l'employé sur le montant de de l'autorisation imposée au propriétaire.</label>
             <div *ngIf="f.submitted && generalParagraph2.errors" class="invalid-feedback">
-              <div *ngIf="generalParagraph2.errors['required']">Please check this box</div>
+              <div *ngIf="generalParagraph2.errors['required']">Veuillez cocher cette case</div>
             </div>
           </div>
         </div>
@@ -121,10 +111,19 @@
       <!--div class="form-group col-md-12">
         <button type="submit" class="btn btn-primary" (click)="generatePdf()">Submit</button>
       </div-->
+
       <div class="form-group col-md-12">
         <button type="submit" class="btn btn-primary">Submit</button>
+        <label class="checkbox-inline" style="margin-left: 440px ;">
+          <input type="checkbox" id="selectAll" (change)="onSelectChange($event)"> Select All
+        </label>
       </div>
 
     </form>
   </div>
 </div>
+
+<br><br>
+<br><br>
+<br><br>
+<br><br>

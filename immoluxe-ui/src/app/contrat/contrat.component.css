@@ -56,7 +56,13 @@ select{
 .p1 {
   margin-bottom: 20px; /* add this line */
 }
+.submit-button {
+  float: left;
+}
 
+.select-all-button {
+  float: right;
+}
 input[type="checkbox"] {
   transform: scale(1.5);
   margin-right: 10px;

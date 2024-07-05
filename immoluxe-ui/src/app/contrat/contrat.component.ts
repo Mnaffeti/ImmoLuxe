@@ -4,7 +4,6 @@ import { NgForm} from "@angular/forms";
 import {Contrat, TypeContrat} from '../contrats'
 import {contratService} from '../contrat.service';
 import { jsPDF } from 'jspdf';
-
 @Component({
   selector: 'app-contrat',
   templateUrl: './contrat.component.html',
@@ -23,8 +22,22 @@ export class ContratComponent {
 
 
   submitform!: NgForm;
-  private baseURL = "http://localhost:8080/api/v1/contrat";
+  //private baseURL = "http://localhost:8080/api/v1/contrat";
   contrat: Contrat = new Contrat();
+  paragraphs: any = {
+    vente: {
+      paragraph1: false,
+      paragraph2: false
+    },
+    location: {
+      paragraph1: false
+    },
+    general: {
+      paragraph1: false,
+      paragraph2: false
+    }
+  };
+
   ngOnInit(): void {
     this.contrat.id = this.route.snapshot.params['id'];
 
@@ -34,7 +47,36 @@ export class ContratComponent {
   }
   onSubmit() {
     console.log(this.contrat);
+    if(this.contrat.typeContrat == 'Vente'){
+      this.contrat.dateFin = null!;
+    }
+
     this.saveContrat();
+  }
+
+  onSelectChange(event: Event) {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      this.SelectAll();
+    } else {
+      this.UnselectAll(); // or whatever function you want to call when unchecked
+    }
+  }
+
+  SelectAll() {
+    for (const type in this.paragraphs) {
+      for (const paragraph in this.paragraphs[type]) {
+        this.paragraphs[type][paragraph] = true;
+      }
+    }
+  }
+
+  UnselectAll() {
+    for (const type in this.paragraphs) {
+      for (const paragraph in this.paragraphs[type]) {
+        this.paragraphs[type][paragraph] = false;
+      }
+    }
   }
   saveContrat() {
     this.contratService.addContrat(this.contrat).subscribe(data => {
@@ -54,7 +96,10 @@ export class ContratComponent {
   generatePdf(contratSave : any): void {
 
     console.log('Generating PDF...');
+
     if (window.confirm('Are you sure you want to generate the PDF?')) {
+      let Y !: number;
+      let X !: number;
       const doc = new jsPDF();
 
       // Add title
@@ -72,7 +117,6 @@ export class ContratComponent {
         day: '2-digit'
       }).replace(/\//g, '-');
       doc.text(` ${formattedDate}`, 20, 5);
-
       // Add contract details in two columns
       const columnWidth = 90;
       const columnMargin = 10;
@@ -81,7 +125,7 @@ export class ContratComponent {
 
       doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
-      doc.text(`Entre les signataires ci-dessous (nom, prénom et numéro d'identification) :` , 20, 40);
+      doc.text(`Entre les signataires ci-dessous (nom, prénom et numéro d'identification) :`, 20, 40);
 
       doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
@@ -99,7 +143,7 @@ export class ContratComponent {
       doc.setFont('helvetica', 'normal');
       doc.text(`M.(s) ${this.contrat.proprietaire.toUpperCase()}`, 30, 80);
 
-     // if(this.contrat.typeContrat == 'Location') {
+      if (this.contrat.typeContrat == 'Location') {
         doc.setFontSize(12);
         doc.setFont('helvetica', 'normal');
         doc.text(`pour le locataire : M.(s) ${this.contrat.client.toUpperCase()}`, 30, 90);
@@ -147,7 +191,6 @@ export class ContratComponent {
         doc.text(`Le présent contrat est résilié dès l'expiration de la période imposée, sans préavis`, 30, 200);
         doc.text(`de l'une des parties à l'autre.`, 30, 210);
 
-        //Section 5
         doc.setFontSize(18);
         doc.setFont('helvetica', 'bolditalic');
         doc.text(`Section 5 : `, leftColumnX, 220);
@@ -157,153 +200,220 @@ export class ContratComponent {
         doc.text(`prestations municipales, à l'exception de la prestation de l'employé sur le montant`, 30, 240);
         doc.text(`de de l'autorisation imposée au propriétaire.`, 30, 250);
 
-        //Section 6
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 6 : `, leftColumnX, 260);
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`L'acheteur reconnaît avoir reçu le magasin objet du présent contrat en bon état avec`, 30, 270);
-        doc.text(`tous ses accessoires tels que matelas, vitres, clés, etc. Et s'engage à le restituer`, 30, 280);
-        doc.text(`à l'expiration de la période de licence tel qu'il l'a reçu de lui.`, 30, 290);
-
-        // Add a second page to the document
         doc.addPage();
+
+        if (this.paragraphs.location.paragraph1) {
+          //Section 5
+          doc.setFontSize(18);
+          doc.setFont('helvetica', 'bolditalic');
+          doc.text(`Section 6 : `, leftColumnX, 10);
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'normal');
+          doc.text(`Le propriétaire n'est pas responsable des dommages et pertes causés par l'eau qui`, 30, 20);
+          doc.text(`s'écoule des toits ou de l'étage supérieur du bâtiment.`, 30, 30);
+
+          Y = 40;
+          X = 7;
+
+        }
+        else{
+          Y = 10;
+          X = 6 ;
+
+        }
+
         //Section 7
         doc.setFontSize(18);
         doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 7 : `, leftColumnX, 20);
+        doc.text(`Section ${X} : `, leftColumnX, Y);
         doc.setFontSize(12);
         doc.setFont('helvetica', 'normal');
-        doc.text(`Toutes les réparations et améliorations faites par l'emprunteur dans le magasin pendant`, 30, 30);
-        doc.text(`la durée de sa résidence restent la propriété du propriétaire sans aucune indemnité`, 30, 40);
-        doc.text(`Toute modification du magasin sans l'accord écrit du propriétaire est interdite.`, 30, 50);
+        doc.text(`Toutes les réparations et améliorations faites par l'emprunteur dans le magasin pendant`, 30, Y+10);
+        doc.text(`la durée de sa résidence restent la propriété du propriétaire sans aucune indemnité`, 30, Y+20);
+        doc.text(`Toute modification du magasin sans l'accord écrit du propriétaire est interdite.`, 30, Y+30);
 
         //Section 8
         doc.setFontSize(18);
         doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 8 : `, leftColumnX, 60);
+        doc.text(`Section ${X+1} : `, leftColumnX, Y+40);
         doc.setFontSize(12);
         doc.setFont('helvetica', 'normal');
-        doc.text(`Le propriétaire n'est pas responsable des dommages et pertes causés par l'eau qui s'écoule`, 30, 70);
-        doc.text(`des toits ou de l'étage supérieur du bâtiment. Le plaignant doit informer le plaignant par une`, 30, 80);
-        doc.text(`lettre écrite avec garantie de livraison ou un télégramme rédigé par un notaire.`, 30, 90);
-        doc.text(`Dans le cas où le remorquage se produit comme indiqué,le propriétaire doit prendre`, 30, 100);
-        doc.text(`l'initiative de l'annulation de ce cas dans un délai n'excédant pas trois jours à`, 30, 110);
-        doc.text(`compter de la date de notification.`, 30, 120);
+        doc.text(`Il est strictement interdit d'introduire dans le magasin des substances inflammables`, 30, Y+50);
+        doc.text(`ou explosives,ainsi que des objets qui créent un danger pour le propriétaire ou les voisins.`, 30, Y+60);
 
         //Section 9
         doc.setFontSize(18);
         doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 9 : `, leftColumnX, 130);
+        doc.text(`Section ${X+2} : `, leftColumnX, Y+70);
         doc.setFontSize(12);
         doc.setFont('helvetica', 'normal');
-        doc.text(`Il est strictement interdit d'introduire dans le magasin des substances inflammables `, 30, 140);
-        doc.text(`ou explosives,ainsi que des objets qui créent un danger pour le propriétaire ou les voisins.`, 30, 150);
+        doc.text(`Il est interdit pour quelque raison que ce soit de prêter le magasin à autrui ou de le`, 30, Y+80);
+        doc.text(`prêter à autrui, même temporairement et sur la base de la bienveillance.`, 30, Y+90);
 
         //Section 10
         doc.setFontSize(18);
         doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 9 : `, leftColumnX, 160);
+        doc.text(`Section ${X+3} : `, leftColumnX, Y+100);
         doc.setFontSize(12);
         doc.setFont('helvetica', 'normal');
-        doc.text(`Il est interdit pour quelque raison que ce soit de prêter le magasin à autrui ou de le`, 30, 170);
-        doc.text(`prêter à autrui, même temporairement et sur la base de la bienveillance.`, 30, 180);
-
-        //Section 11
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 11 : `, leftColumnX, 190);
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`Le propriétaire a le droit d'inspecter le magasin quand il le désire, soit directement, soit`, 30, 200);
-        doc.text(`par l'intermédiaire de son représentant, et il peut aussi envoyer qui il veut pour le faire`, 30, 210);
-        doc.text(`visiter Au cas où il voudrait le vendre, le justifier, le réparer ou créer un autre étage, sans`, 30, 220);
-        doc.text(`s'opposer au plaignant, qui n'a pas le droit d'exiger. Il n'a pas le droit de demander une amende`, 30, 230);
-        doc.text(`ou une diminution du montant du loyer, même si la durée des travaux dépasse le délai légal.`, 30, 240);
-
-        //Section 12
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 12 : `, leftColumnX, 250);
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`Il n'est pas permis à l'emprunteur de se comporter dans la boutique d'une manière indigne,`, 30, 260);
-        doc.text(`et il lui est interdit d'entrer dans la boutique des personnes de mauvaise moralité ou des`, 30, 270);
-        doc.text(`personnes suspectes.`, 30, 280);
-
-        doc.addPage();
-        //Section 13
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 13 : `, leftColumnX, 20);
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`La personne autorisée n'est pas responsable des troubles ou des dommages causés`, 30, 30);
-        doc.text(`à la personne autorisée par d'autres personnes.`, 30, 40);
-
-        //Section 14
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 14 : `, leftColumnX, 50);
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`Il est strictement interdit d'utiliser les toits pour déposer des marchandises ou d'autres`, 30, 60);
-        doc.text(`choses, sauf pour étendre des vêtements Le commerçant doit réparer et indemniser de ses`, 30, 70);
-        doc.text(`propres deniers les dommages causés par la violation de cette condition.`, 30, 80);
-
-        //Section 15
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 15 : `, leftColumnX, 90);
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`Le propriétaire mettra à la disposition de l'occupant des compteurs d'eau et d'électricité`, 30, 100);
-        doc.text(`et l'occupant paiera la valeur de ce qu'il consomme, et toute coupure d'eau ou d'électricité`, 30, 110);
-        doc.text(`Toute coupure d'eau ou d'électricité est à la charge du locataire.`, 30, 120);
-
-        //Section 16
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 16 : `, leftColumnX, 130);
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`Le bailleur a le droit de résilier obligatoirement le présent contrat si l'acquéreur enfreint`, 30, 140);
-        doc.text(`les dispositions des conditions ci-dessus.`, 30, 150);
-
-        //Section 17
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Section 17 : `, leftColumnX, 160);
-        doc.setFontSize(12);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`Les parties susmentionnées sont convenues de ce qui précède et l'ont écrit en trois`, 30, 170);
-        doc.text(`exemplaires, et chacune d'elles a reçu un exemplaire, et le troisième reste auprès`, 30, 180);
-        doc.text(`de l'officier de l'état civil Le troisième restera auprès du greffier.`, 30, 190);
-
+        doc.text(`Il est strictement interdit d'utiliser les toits pour déposer des marchandises ou d'autre`, 30, Y+110);
+        doc.text(`choses, sauf pour étendre des vêtements Le commerçant doit réparer et indemniser de ses`, 30, Y+120);
+        doc.text(`propres deniers les dommages causés par la violation de cette condition.`, 30, Y+130);
 
         //Adresse
         doc.setFontSize(13);
         doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Tunis le ${formattedDate}`, leftColumnX, 210);
+        doc.text(`Tunis le ${formattedDate}`, leftColumnX, Y+200);
 
         //Signature 1
         doc.setFontSize(15);
         doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Signature de Propriétaire ...`, leftColumnX, 230);
+        doc.text(`Signature de Propriétaire`, leftColumnX, Y+220);
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
-        doc.text(`(Nom ,Prenom et Date)`, 25, 240);
+        doc.text(`(Nom ,Prenom et Date)`, 25, Y+230);
 
         //Signature 2
         doc.setFontSize(15);
         doc.setFont('helvetica', 'bolditalic');
-        doc.text(`Signature de Locataire`, rightColumnX, 230);
+        doc.text(`Signature de Locataire`, rightColumnX, Y+220);
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
-        doc.text(`(Nom ,Prenom et Date)`, rightColumnX + 5, 240);
-  //    }
+        doc.text(`(Nom ,Prenom et Date)`, rightColumnX + 5, Y+230);
+      }
 
+      if (this.contrat.typeContrat == 'Vente') {
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`pour l'acheteur : M.(s) ${this.contrat.client.toUpperCase()}`, 30, 90);
+
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`situé à ${this.contrat.adresse.toUpperCase()}`, 30, 100);
+
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`composé de ${this.contrat.compose.toUpperCase()}`, 30, 110);
+
+        //Section 2
+
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bolditalic');
+        doc.text(`Section 2 : `, leftColumnX, 120);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`La vente est réalisée le ${this.contrat.dateDebut} pour un prix de ${this.contrat.montant}.DT .`, 30, 130);
+
+
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bolditalic');
+        doc.text(`Section 3 : `, leftColumnX, 140);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Le paiement du prix de vente sera effectué par virement bancaire.`, 30, 150);
+        doc.text(`Le vendeur s'engage à remettre le bien immobilier à l'acheteur à la date de signature`, 30, 160);
+        doc.text(`du présent contrat.`, 30, 170);
+
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bolditalic');
+        doc.text(`Section 4 : `, leftColumnX, 180);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Le présent contrat est résilié dès l'expiration de la période imposée, sans préavis`, 30, 190);
+        doc.text(`de l'une des parties à l'autre.`, 30, 200);
+
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bolditalic');
+        doc.text(`Section 5 : `, leftColumnX, 210);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Les honoraires des affaires sont à la charge du bénéficiaire, ainsi que toutes les `, 30, 220);
+        doc.text(`prestations municipales, à l'exception de la prestation de l'employé sur le montant`, 30, 230);
+        doc.text(`de de l'autorisation imposée au propriétaire.`, 30, 240);
+
+
+
+        if(this.paragraphs.vente.paragraph1){
+          doc.setFontSize(18);
+          doc.setFont('helvetica', 'bolditalic');
+          doc.text(`Section 6 : `, leftColumnX, 250);
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'normal');
+          doc.text(`Un article de cette promesse doit prévoir une clause qui permet de récupérer toute ou`, 30, 260);
+          doc.text(`partie des sommes versées lors de la promesse de vente en cas de refus du Gouverneur`, 30, 270);
+          doc.text(`(Le refus est exceptionnel).`, 30, 280);
+
+
+          Y = 10;
+          X = 7;
+          doc.addPage();
+        }
+        else{
+          Y = 250;
+          X = 6;
+        }
+
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bolditalic');
+        doc.text(`Section ${X} : `, leftColumnX, Y);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Le vendeur s'engage dans la promesse de vente à ne pas vendre son bien immobilier à une`, 30, Y+10);
+        doc.text(`autre personne que l'acheteur étranger tant que l'autorisation n'est pas délivrée, il va`, 30, Y+20);
+        doc.text(`donc perdre des opportunités de vente et il peut demander de garder une somme définie sur`, 30, Y+30);
+        doc.text(`l'acompte versé.`, 30, Y+40);
+
+        if(Y == 250)
+        {
+          Y = -40;
+          doc.addPage();
+        }
+
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bolditalic');
+        doc.text(`Section ${X+1} : `, leftColumnX, Y+50);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`L'acheteur reconnaît avoir visité et inspecté le bien immobilier avant la signature du présent`, 30, Y+60);
+        doc.text(`contrat et déclare être satisfait de son état. Le vendeur ne sera pas tenu responsable pour tout`, 30, Y+70);
+        doc.text(`défaut ou vice caché qui pourrait être découvert après la signature du contrat.`, 30, Y+80);
+
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bolditalic');
+        doc.text(`Section ${X+2} : `, leftColumnX, Y+90);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Le présent contrat sera régi et interprété conformément aux lois de la République Tunisienne.`, 30, Y+100);
+        doc.text(`Tout litige ou différend découlant du présent contrat sera soumis à la juridiction compétente`, 30, Y+110);
+        doc.text(`du Tribunal de Tunis.`, 30, Y+120);
+
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'bolditalic');
+        doc.text(`Les parties ont lu et compris les termes du présent contrat et l'acceptent en signant ci-dessous. `, leftColumnX, Y+140);
+
+
+        //Adresse
+        doc.setFontSize(11);
+        doc.setFont('helvetica', 'bolditalic');
+        doc.text(`Tunis le ${formattedDate}`, leftColumnX, Y+160);
+
+        //Signature 1
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bolditalic');
+        doc.text(`Signature du vendeur`, leftColumnX, Y+180);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`(Nom ,Prenom et Date)`, 25, Y+190);
+
+        //Signature 2
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'bolditalic');
+        doc.text(`Signature de l'acheteur`, rightColumnX, Y+180);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`(Nom ,Prenom et Date)`, rightColumnX + 5, Y+190);
+
+      }
       // Generate the PDF blob
       const pdfBlob = doc.output('blob');
       // Create a URL for the PDF blob
@@ -311,7 +421,7 @@ export class ContratComponent {
       // Create a link to download the PDF file
       const link = document.createElement('a');
       link.href = pdfUrl;
-      link.download = `Contract-${contratSave.id}.pdf`;
+      link.download = `Contract-${contratSave.typeContrat.substring(0,1)}-${contratSave.id}.pdf`;
       link.click();
       // Clean up
       URL.revokeObjectURL(pdfUrl);
