@@ -6,7 +6,7 @@ export class Contrat {
   // idProprietaire!: number;
   // idProperty!: Property;
   dateDebut!: Date;
-  dateFin!: Date;
+  dateFin!: Date ;
   typeContrat!: TypeContrat;
   montant!: number ;
   createdBy! :String  ;
@@ -17,9 +17,8 @@ export class Contrat {
   adresse!: string;
   compose!: string;
   but!: string;
-  //description!: string;
-  // hasEquipment!: boolean;
-  // equipements!: string;
+  description!: string;
+
 
   constructor() {
     /*this.idAgent = 0;
@@ -29,23 +28,21 @@ export class Contrat {
     this.dateDebut =  new Date();
     this.dateFin  =  new Date();
     this.createdDate =  new Date();
-    this.typeContrat = TypeContrat.Default;
+    this.typeContrat = TypeContrat.None;
     this.montant = 0;
     this.proprietaire="Douaa ZAOUI";
     this.client="Aziz NAFFETI";
     this.adresse="Tunis Arianna";
     this.compose="2 Chambres";
     this.but="Inconnu";
+    this.description = "";
 
-    /*this.hasEquipment = false;
-    this.equipements = "";
-    this.description = "";*/
   }
 }
 
-enum TypeContrat{
-  Default,
-  Appartement,
-  House,
-  Terrain
+export enum TypeContrat {
+  None = '',
+  Vente = 'Vente',
+  Location = 'Location',
+  Construction = 'Construction'
 }

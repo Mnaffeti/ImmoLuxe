@@ -4,7 +4,7 @@
     <data-source source="LOCAL" name="immoluxe" uuid="1d40e611-20a9-45be-9179-47a3deffabe1">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://localhost:5432/immoluxe</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.host.port" />

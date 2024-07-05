@@ -30,6 +30,8 @@ import { ContratComponent } from './contrat/contrat.component';
 import { ContratListComponent } from './contrat-list/contrat-list.component';
 import { ShowDetailsContratComponent } from './show-details-contrat/show-details-contrat.component';
 import { UpdateContratComponent } from './update-contrat/update-contrat.component';
+import { StatContratComponent } from './stat-contrat/stat-contrat.component';
+import { ListToDoAgentComponent } from './list-to-do-agent/list-to-do-agent.component';
 
 
 
@@ -51,6 +53,8 @@ export function kcFactory(kcServcie: KeycloakService) {
          ContratListComponent,
          ShowDetailsContratComponent,
          UpdateContratComponent,
+         StatContratComponent,
+         ListToDoAgentComponent,
 
   ],
   imports: [
