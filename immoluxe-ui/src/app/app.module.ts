@@ -9,8 +9,7 @@ import { HttpTokenInterceptor } from './services/http-interceptor/http-token.int
 import { MenuComponent } from './components/menu/menu.component';
 import { HomeComponent } from './pages/home/home.component';
 
-
-
+import {ChartCommonModule} from "@swimlane/ngx-charts";
 import { HttpClientModule } from '@angular/common/http'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PropertyListComponent } from './properties-list/properties-list.component';
@@ -33,6 +32,7 @@ import { UpdateContratComponent } from './update-contrat/update-contrat.componen
 import { StatContratComponent } from './stat-contrat/stat-contrat.component';
 import { ListToDoAgentComponent } from './list-to-do-agent/list-to-do-agent.component';
 
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 
@@ -58,6 +58,8 @@ export function kcFactory(kcServcie: KeycloakService) {
 
   ],
   imports: [
+    ChartCommonModule,
+    NgxChartsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserModule,
