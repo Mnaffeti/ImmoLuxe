@@ -1,21 +1,21 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { NgForm} from "@angular/forms";
+import {NgForm, NgModel} from "@angular/forms";
 import {Contrat, TypeContrat} from '../contrats'
 import {contratService} from '../contrat.service';
 import { jsPDF } from 'jspdf';
+
 @Component({
   selector: 'app-contrat',
   templateUrl: './contrat.component.html',
   styleUrls: ['./contrat.component.css']
 })
-export class ContratComponent {
+export class ContratComponent implements OnInit{
 
   constructor(
     private contratService :contratService,
     private route: ActivatedRoute,
-    private router : Router
-
+    private router : Router,
   ) {
 
   }
@@ -23,6 +23,25 @@ export class ContratComponent {
 
   submitform!: NgForm;
   //private baseURL = "http://localhost:8080/api/v1/contrat";
+
+
+  checkDateFinValidity(dateFin: NgModel): void {
+    const dateDebut = new Date(this.contrat.dateDebut);
+    const dateFinValue = new Date(this.contrat.dateFin);
+    const diff = Math.abs(dateFinValue.getTime() - dateDebut.getTime());
+    const days = Math.ceil(diff / (1000 * 3600 * 24))+1;
+
+      if (days <= 3) {
+      dateFin.control.setErrors({ minDays: true });
+      setTimeout(() => {
+        dateFin.control.setErrors(null);
+      }, 5000);
+    } else {
+      dateFin.control.setErrors(null);
+    }
+
+  }
+
   contrat: Contrat = new Contrat();
   paragraphs: any = {
     vente: {

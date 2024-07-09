@@ -4,12 +4,16 @@
 <div class="container">
 
   <div >
-    <form (ngSubmit)="goToContrat()" >
-      <div class="form-group col-md-6 inline ">
-
-        <input  [(ngModel)]="EnteredID" type="text" class="form-control" id="id" name="id" placeholder="Search by ID">
-        <button class="btn btn-secondary " type="submit">Search</button>
-      </div>
+    <form (ngSubmit)="searchContrat()">
+      <mat-form-field class="col-md-6 inline">
+        <input matInput [(ngModel)]="EnteredID" type="text" id="id" name="id" placeholder="Search by ID">
+        <mat-error *ngIf="EnteredID && EnteredID < 3">
+          Please enter ID
+        </mat-error>
+        <button mat-raised-button type="submit" color="primary" [disabled]="!EnteredID ">
+          Search
+        </button>
+      </mat-form-field>
     </form>
 
   </div>
@@ -20,11 +24,13 @@
 
       <thead class="table-dark ">
       <tr>
+        <th>Id</th>
         <th>IdAgent</th>
         <th>Montant</th>
         <th>Date Debut</th>
         <th>Date Fin</th>
         <th>TypeContrat</th>
+        <th>Actions</th>
       </tr>
 
       </thead>
@@ -32,6 +38,7 @@
 
       <tbody>
       <tr *ngFor = "let contrat of contrats">
+        <td>{{contrat.id}}</td>
         <td>{{contrat.createdBy}}</td>
         <td>{{contrat.montant}}</td>
         <td>{{contrat.dateDebut}}</td>

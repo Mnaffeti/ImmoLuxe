@@ -1,19 +1,22 @@
-.btn{
-  margin-right: 20px;
-  box-shadow: 10 4px 8px rgba(0, 0, 0, 0.1);
-
+.container {
+  max-width: 1200px;
+  margin: auto;
 }
-
-.inline{
+.property-card {
+  margin-bottom: 20px;
+}
+.mat-card-title {
+  color: #007BFF;
+  font-weight: bold;
+}
+.mat-card-content {
+  color: #6c757d;
+}
+.mat-card-actions {
   display: flex;
+  justify-content: space-between;
 }
-
-
-.inline .btn{
-  margin-left: 1rem;
-}
-
-input{
-  border: 1px solid #000000;
-  box-shadow: 10 4px 8px rgba(0, 0, 0, 0.1);
+.property-image {
+  width: 100%;
+  height: auto;
 }

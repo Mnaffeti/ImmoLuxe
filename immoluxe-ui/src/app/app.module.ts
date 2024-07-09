@@ -33,7 +33,10 @@ import { StatContratComponent } from './stat-contrat/stat-contrat.component';
 import { ListToDoAgentComponent } from './list-to-do-agent/list-to-do-agent.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-
+import {MatCardModule} from "@angular/material/card";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ToastrModule } from 'ngx-toastr';
 
 
 export function kcFactory(kcServcie: KeycloakService) {
@@ -60,14 +63,17 @@ export function kcFactory(kcServcie: KeycloakService) {
   imports: [
     ChartCommonModule,
     NgxChartsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000
+    }),
     BrowserModule,
     AppRoutingModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule,FormsModule,HomeComponent, BrowserAnimationsModule ,
-    MatFormFieldModule, MatInputModule,MatFormFieldModule, MatInputModule, MatDatepickerModule,
-     MatNativeDateModule
+    HttpClientModule, FormsModule, HomeComponent, BrowserAnimationsModule,
+    MatFormFieldModule, MatInputModule, MatFormFieldModule, MatInputModule, MatDatepickerModule,
+    MatNativeDateModule, MatCardModule, MatSelectModule, MatCheckboxModule
   ],
   providers: [
     {
