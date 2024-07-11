@@ -15,6 +15,8 @@ import {client, Role} from "../client";
 })
 export class ContratComponent implements OnInit{
   clients: client[] = [];
+
+
   constructor(
     private contratService :contratService,
     private route: ActivatedRoute,

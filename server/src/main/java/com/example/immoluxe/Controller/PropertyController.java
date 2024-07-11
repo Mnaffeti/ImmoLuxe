@@ -30,7 +30,7 @@ public class PropertyController {
     @Autowired
     private PropertyRepository propertyRepository;
 
-    private String uploadDir = "/Users/azer/ImmoLuxe1/server/src/main/resources/uploads";
+    private String uploadDir = "C:/Users/DELL/OneDrive/Desktop/ImmoLuxe/server/src/main/resources/uploads";
 
     // get all properties
     @CrossOrigin(origins = "http://localhost:4200")

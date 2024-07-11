@@ -10,20 +10,20 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  
+
   properties: Property[];
   EnteredID!: number;
 
   constructor(private propertyService: PropertyService, private router: Router, private http: HttpClient) {
     this.properties = [];
-  } 
+  }
 
   ngOnInit(): void {
     this.getProperties();
   }
 
   goToProperty(): void {
-    console.log(this.EnteredID); 
+    console.log(this.EnteredID);
     this.router.navigate(['details-of-properties', this.EnteredID]);
   }
 
@@ -36,14 +36,15 @@ export class HomeComponent implements OnInit {
   }
 
   deleteProperty(id: number): void {
-    if(confirm("Are you sure to delete Property ID: "+id)) {
-      this.propertyService.deleteProperty(id).subscribe( data => {
+    if (confirm("Are you sure to delete Property ID: " + id)) {
+      this.propertyService.deleteProperty(id).subscribe(data => {
         console.log(data);
         this.getProperties();
       })
     }
+  }
 
-  goToEmployeeList(){
+  goToEmployeeList():void{
     this.router.navigate(['/show-all-properties']);
     this.router.navigate(['/show-all-contrats']);
   }

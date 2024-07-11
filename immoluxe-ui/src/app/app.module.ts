@@ -17,7 +17,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PropertyListComponent } from './properties-list/properties-list.component';
 import { AddPropertyComponent } from './add-properties/add-properties.component';
 import { FormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -30,7 +29,6 @@ import { UpdatePropertyComponent } from './update-properties/update-properties.c
 import { ShowDetailsComponent } from './show-details/show-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule } from '@angular/material/grid-list'; // Import MatGridListModule here
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ContratComponent } from './contrat/contrat.component';
 import { ContratListComponent } from './contrat-list/contrat-list.component';
@@ -40,10 +38,8 @@ import { StatContratComponent } from './stat-contrat/stat-contrat.component';
 import { ListToDoAgentComponent } from './list-to-do-agent/list-to-do-agent.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-import {MatCardModule} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 
 export function kcFactory(kcServcie: KeycloakService) {
@@ -74,9 +70,6 @@ export function kcFactory(kcServcie: KeycloakService) {
     ChartCommonModule,
     NgxChartsModule,
     CommonModule,
-    ToastrModule.forRoot({
-      timeOut: 3000
-    }),
     BrowserModule,
     AppRoutingModule,
     NgbModule,
@@ -96,7 +89,7 @@ export function kcFactory(kcServcie: KeycloakService) {
     NgxChartsModule,
     MatTabsModule,
 
-    HttpClientModule, FormsModule, HomeComponent, BrowserAnimationsModule,
+    HttpClientModule, FormsModule, BrowserAnimationsModule,
     MatFormFieldModule, MatInputModule, MatFormFieldModule, MatInputModule, MatDatepickerModule,
     MatNativeDateModule, MatCardModule, MatSelectModule, MatCheckboxModule
   ],
