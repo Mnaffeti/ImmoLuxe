@@ -1,28 +1,65 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import { NgForm} from "@angular/forms";
+import {NgForm, NgModel} from "@angular/forms";
 import {Contrat, TypeContrat} from '../contrats'
 import {contratService} from '../contrat.service';
 import { jsPDF } from 'jspdf';
+import {ClientService} from "../ClientService";
+import {ListToDoAgentComponent} from "../list-to-do-agent/list-to-do-agent.component";
+import {client, Role} from "../client";
+
 @Component({
   selector: 'app-contrat',
   templateUrl: './contrat.component.html',
   styleUrls: ['./contrat.component.css']
 })
-export class ContratComponent {
-
+export class ContratComponent implements OnInit{
+  clients: client[] = [];
   constructor(
     private contratService :contratService,
     private route: ActivatedRoute,
-    private router : Router
-
+    private router : Router,
+    private clientService: ClientService,
   ) {
+    const Client1 = new client();
+    Client1.id = 5;
+    Client1.firstName = 'TEST';
+    Client1.lastName = 'Naffeti';
+    Client1.email = 'zaouidoa9@gmail.com';
+    Client1.role = Role.Client;
+    this.clients.push(Client1);
 
+    const Client2 = new client();
+    Client2.id = 3;
+    Client2.firstName = 'Douaa';
+    Client2.lastName = 'ZAOUI';
+    Client2.email = 'zaouidoa9@gmail.com';
+    Client2.role = Role.Proprietaire;
+    this.clients.push(Client2);
   }
 
 
   submitform!: NgForm;
   //private baseURL = "http://localhost:8080/api/v1/contrat";
+
+
+  checkDateFinValidity(dateFin: NgModel): void {
+    const dateDebut = new Date(this.contrat.dateDebut);
+    const dateFinValue = new Date(this.contrat.dateFin);
+    const diff = Math.abs(dateFinValue.getTime() - dateDebut.getTime());
+    const days = Math.ceil(diff / (1000 * 3600 * 24))+1;
+
+      if (days <= 3) {
+      dateFin.control.setErrors({ minDays: true });
+      setTimeout(() => {
+        dateFin.control.setErrors(null);
+      }, 5000);
+    } else {
+      dateFin.control.setErrors(null);
+    }
+
+  }
+
   contrat: Contrat = new Contrat();
   paragraphs: any = {
     vente: {
@@ -38,15 +75,30 @@ export class ContratComponent {
     }
   };
 
+  PropertyID : number =0;
+  CLientID :number= 0 ;
+  ProprietaireID :number = 0;
+  ContratTYPE !: TypeContrat;
+
   ngOnInit(): void {
     this.contrat.id = this.route.snapshot.params['id'];
 
     this.contratService.getContratById(this.contrat.id).subscribe(data => {
       this.contrat = data;
     }, error => console.log(error));
+
+    this.PropertyID = this.route.snapshot.params['id'];
+    this.CLientID = this.route.snapshot.params['clientId'];
+    this.ProprietaireID = this.route.snapshot.params['proprietaireId'];
+    this.ContratTYPE = this.route.snapshot.params['contratType'];
+    if((this.ContratTYPE == 'Vente') || (this.ContratTYPE == 'Location')){
+      this.contrat.typeContrat = this.ContratTYPE;
+    }
   }
+
   onSubmit() {
     console.log(this.contrat);
+
     if(this.contrat.typeContrat == 'Vente'){
       this.contrat.dateFin = null!;
     }
@@ -96,7 +148,12 @@ export class ContratComponent {
   generatePdf(contratSave : any): void {
 
     console.log('Generating PDF...');
-
+    const clientId = this.CLientID;
+    const proprietaireId = this.ProprietaireID;
+    const client = this.clients.find(c => c.id === clientId);
+    const proprietaire = this.clients.find(c => c.id === proprietaireId);
+    console.log(`clientId ${clientId}`);
+    console.log(`client ${client}`);
     if (window.confirm('Are you sure you want to generate the PDF?')) {
       let Y !: number;
       let X !: number;
@@ -127,14 +184,28 @@ export class ContratComponent {
       doc.setFont('helvetica', 'normal');
       doc.text(`Entre les signataires ci-dessous (nom, prénom et numéro d'identification) :`, 20, 40);
 
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`${this.contrat.proprietaire} `, 30, 50);
+      if(proprietaire) {
 
-      doc.setFontSize(12);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`${this.contrat.client} `, 30, 60);
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`${proprietaire.firstName} ${proprietaire.lastName} `, 30, 60);
+      }
+      else {
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`${this.contrat.proprietaire} `, 30, 50);
+      }
 
+      if(client){
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`${client.firstName} ${client.lastName} `, 30, 60);
+      }
+      else {
+        doc.setFontSize(12);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`${this.contrat.client} `, 30, 60);
+      }
       // Section 1 : M.(s)
       doc.setFontSize(18);
       doc.setFont('helvetica', 'bolditalic');

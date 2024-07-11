@@ -9,8 +9,7 @@ import { HttpTokenInterceptor } from './services/http-interceptor/http-token.int
 import { MenuComponent } from './components/menu/menu.component';
 import { HomeComponent } from './pages/home/home.component';
 
-
-
+import {ChartCommonModule} from "@swimlane/ngx-charts";
 import { HttpClientModule } from '@angular/common/http'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PropertyListComponent } from './properties-list/properties-list.component';
@@ -33,8 +32,12 @@ import { UpdateContratComponent } from './update-contrat/update-contrat.componen
 import { StatContratComponent } from './stat-contrat/stat-contrat.component';
 import { ListToDoAgentComponent } from './list-to-do-agent/list-to-do-agent.component';
 
-
-
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {MatCardModule} from "@angular/material/card";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ToastrModule } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 export function kcFactory(kcServcie: KeycloakService) {
   return () => kcServcie.init();
@@ -58,14 +61,20 @@ export function kcFactory(kcServcie: KeycloakService) {
 
   ],
   imports: [
+    ChartCommonModule,
+    NgxChartsModule,
+    CommonModule,
+    ToastrModule.forRoot({
+      timeOut: 3000
+    }),
     BrowserModule,
     AppRoutingModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    HttpClientModule,FormsModule,HomeComponent, BrowserAnimationsModule ,
-    MatFormFieldModule, MatInputModule,MatFormFieldModule, MatInputModule, MatDatepickerModule,
-     MatNativeDateModule
+    HttpClientModule, FormsModule, HomeComponent, BrowserAnimationsModule,
+    MatFormFieldModule, MatInputModule, MatFormFieldModule, MatInputModule, MatDatepickerModule,
+    MatNativeDateModule, MatCardModule, MatSelectModule, MatCheckboxModule
   ],
   providers: [
     {

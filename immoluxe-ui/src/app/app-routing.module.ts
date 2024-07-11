@@ -17,6 +17,7 @@ const routes: Routes = [
   {path:"show-all-properties",component: PropertyListComponent},
   {path:"show-all-contrats",component: ContratListComponent},
   {path:"add-properties", component: AddPropertyComponent},
+  { path: 'add-contrat/:id/:clientId/:proprietaireId/:contratType', component: ContratComponent },
   {path:"add-contrat", component: ContratComponent},
   {path:'updating-by-id/:id',component:UpdatePropertyComponent},
   {path:'updating-contrat-by-id/:id',component:UpdateContratComponent},

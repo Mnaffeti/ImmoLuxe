@@ -3,6 +3,7 @@ import {contratService} from '../contrat.service';
 import {PropertyService} from "../properties.service";
 import {Router} from "@angular/router";
 import {Contrat} from '../contrats'
+import {map, Observable} from "rxjs";
 
 @Component({
   selector: 'app-contrat-list',
@@ -12,7 +13,7 @@ import {Contrat} from '../contrats'
 export class ContratListComponent {
   contrats : Contrat[];
   EnteredID !: number;
-
+  searchResult !: boolean;
   constructor(private contratService: contratService, private router: Router) {
     this.contrats = [];
   }
@@ -20,7 +21,25 @@ export class ContratListComponent {
   ngOnInit(): void {
     this.getContrats();
   }
+  async searchContrat() {
+    if (this.EnteredID) {
+      const contratExists = await this.getContratByID(this.EnteredID).toPromise();
+      if (contratExists) {
+        this.router.navigate(['details-of-contrat', this.EnteredID]);
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 
+  getContratByID(id: number): Observable<boolean> {
+    return this.contratService.getContratById(id).pipe(
+      map(data => !!data)
+    );
+  }
   goToContrat() {
     console.log(this.EnteredID);
     this.router.navigate(['details-of-contrat', this.EnteredID]);
