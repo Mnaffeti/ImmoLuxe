@@ -25,6 +25,7 @@ public class Property {
  @GeneratedValue(strategy = GenerationType.IDENTITY)
  private Long id;
 
+
  private String adresse;
  private String type;
  private double price;
@@ -119,3 +120,4 @@ public class Property {
   this.clicks = clicks;
  }
 }
+

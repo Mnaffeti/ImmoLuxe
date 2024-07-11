@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {KeycloakService} from "./services/keycloak/keycloak.service";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ImmoLuxe';
+  constructor(private keycloakService: KeycloakService) {}
+
+  onLogout() {
+    this.keycloakService.logout();
+  }
 }

@@ -42,6 +42,10 @@ export class HomeComponent implements OnInit {
         this.getProperties();
       })
     }
+
+  goToEmployeeList(){
+    this.router.navigate(['/show-all-properties']);
+    this.router.navigate(['/show-all-contrats']);
   }
 
   detailsOfProperty(id: number): void {

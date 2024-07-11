@@ -8,6 +8,10 @@ import { HttpTokenInterceptor } from './services/http-interceptor/http-token.int
 import { MenuComponent } from './components/menu/menu.component';
 import { HomeComponent } from './pages/home/home.component';
 import { MatCardModule } from '@angular/material/card';
+
+
+import {ChartCommonModule} from "@swimlane/ngx-charts";
+
 import { HttpClientModule } from '@angular/common/http'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PropertyListComponent } from './properties-list/properties-list.component';
@@ -28,6 +32,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule } from '@angular/material/grid-list'; // Import MatGridListModule here
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ContratComponent } from './contrat/contrat.component';
+import { ContratListComponent } from './contrat-list/contrat-list.component';
+import { ShowDetailsContratComponent } from './show-details-contrat/show-details-contrat.component';
+import { UpdateContratComponent } from './update-contrat/update-contrat.component';
+import { StatContratComponent } from './stat-contrat/stat-contrat.component';
+import { ListToDoAgentComponent } from './list-to-do-agent/list-to-do-agent.component';
+
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {MatCardModule} from "@angular/material/card";
+import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import { ToastrModule } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 export function kcFactory(kcServcie: KeycloakService) {
   return () => kcServcie.init();
@@ -38,12 +55,28 @@ export function kcFactory(kcServcie: KeycloakService) {
     AppComponent,
     MenuComponent,
     PropertyListComponent,
+
+    HomeComponent ,// Declare HomeComponent here
+
+
     AddPropertyComponent,
     UpdatePropertyComponent,
-    ShowDetailsComponent,
-    HomeComponent // Declare HomeComponent here
+         ShowDetailsComponent,
+         ContratComponent,
+         ContratListComponent,
+         ShowDetailsContratComponent,
+         UpdateContratComponent,
+         StatContratComponent,
+         ListToDoAgentComponent,
+
   ],
   imports: [
+    ChartCommonModule,
+    NgxChartsModule,
+    CommonModule,
+    ToastrModule.forRoot({
+      timeOut: 3000
+    }),
     BrowserModule,
     AppRoutingModule,
     NgbModule,
@@ -61,8 +94,12 @@ export function kcFactory(kcServcie: KeycloakService) {
     MatSelectModule,
     MatOptionModule,
     NgxChartsModule,
-    MatTabsModule
-  ],  
+    MatTabsModule,
+
+    HttpClientModule, FormsModule, HomeComponent, BrowserAnimationsModule,
+    MatFormFieldModule, MatInputModule, MatFormFieldModule, MatInputModule, MatDatepickerModule,
+    MatNativeDateModule, MatCardModule, MatSelectModule, MatCheckboxModule
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
@@ -70,6 +107,7 @@ export function kcFactory(kcServcie: KeycloakService) {
       multi: true
     }, {
       provide: APP_INITIALIZER,
+
       deps: [KeycloakService],
       useFactory: kcFactory,
       multi: true
