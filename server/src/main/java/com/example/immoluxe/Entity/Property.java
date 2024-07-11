@@ -111,12 +111,6 @@ public class Property {
   this.photoUrl = photoUrl;
  }
 
- public void setFullPhotoUrl(String baseUrl) {
-  if (this.photoUrl != null) {
-   this.photoUrl = baseUrl + this.photoUrl;
-  }
- }
-
  public List<Click> getClicks() {
   return clicks;
  }

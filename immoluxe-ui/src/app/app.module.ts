@@ -27,6 +27,7 @@ import { ShowDetailsComponent } from './show-details/show-details.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatGridListModule } from '@angular/material/grid-list'; // Import MatGridListModule here
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MatTabsModule } from '@angular/material/tabs';
 
 export function kcFactory(kcServcie: KeycloakService) {
   return () => kcServcie.init();
@@ -59,7 +60,8 @@ export function kcFactory(kcServcie: KeycloakService) {
     MatTableModule,
     MatSelectModule,
     MatOptionModule,
-    NgxChartsModule
+    NgxChartsModule,
+    MatTabsModule
   ],  
   providers: [
     {
