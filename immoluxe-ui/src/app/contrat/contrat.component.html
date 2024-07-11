@@ -48,6 +48,21 @@
         </mat-error>
       </mat-form-field>
 
+      <mat-form-field class="full-width" style="margin: 20px;">
+        <mat-label><b>Property ID</b></mat-label>
+        <input matInput type="number" [(ngModel)]="PropertyID" name="Property" #Property="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Property.errors }">
+      </mat-form-field>
+
+      <mat-form-field class="full-width" style="margin: 20px;">
+        <mat-label><b>Client ID</b></mat-label>
+        <input matInput type="number" [(ngModel)]="CLientID" name="Client" #Client="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Client.errors }">
+      </mat-form-field>
+
+      <mat-form-field class="full-width" style="margin: 20px;">
+        <mat-label><b>Proprietaire ID </b></mat-label>
+        <input matInput type="number" [(ngModel)]="ProprietaireID" name="Proprietaire"  #Proprietaire="ngModel" [ngClass]="{ 'is-invalid': f.submitted && Proprietaire.errors }">
+      </mat-form-field>
+
       <!-- Display paragraphs to be checked based on contract type -->
       <div *ngIf="contrat.typeContrat === TypeContrat.Vente">
         <div class="full-width" style="margin: 20px;">

@@ -37,7 +37,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { ToastrModule } from 'ngx-toastr';
-
+import { CommonModule } from '@angular/common';
 
 export function kcFactory(kcServcie: KeycloakService) {
   return () => kcServcie.init();
@@ -63,6 +63,7 @@ export function kcFactory(kcServcie: KeycloakService) {
   imports: [
     ChartCommonModule,
     NgxChartsModule,
+    CommonModule,
     ToastrModule.forRoot({
       timeOut: 3000
     }),
