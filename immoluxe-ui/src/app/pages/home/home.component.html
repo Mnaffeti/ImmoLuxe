@@ -5,7 +5,31 @@
   
           <!-- Skills -->
           <section id="skills" class="section-2 odd highlights image-right counter skills featured">
+
               <br><br>
+              <div class="container">
+                <h1 class="mt-4 mb-4">Property Listing</h1>
+                <div class="row">
+                    <div class="column" *ngFor = "let property of properties">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/150" alt="Property Image" style="width:100%">
+                            <div class="container">
+                                <h2>{{property.type}}</h2>
+                                <p>
+                                    Address: {{property.address}} <br>
+                                    Price: {{property.price}} <br>
+                                    Bedrooms: {{property.bedrooms}} <br>
+                                    Bathrooms: {{property.bathrooms}} <br>
+                                    Area: {{property.area}} <br>
+                                    Description: {{property.description}}
+                                </p>
+                                <p><button (click) = "detailsOfProperty(property.id)" class = "button">See Listing</button></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
                   <div class="divMain container">
                       <div class="container c1 text">
                           <h1 class="text"> Techknowlogy Stack Used:</h1>
@@ -126,4 +150,5 @@
   </div>
   <br><br><br><br><br>
   </section>
+  
   

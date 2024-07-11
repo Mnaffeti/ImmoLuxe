@@ -16,7 +16,7 @@ export class PropertyService {
     return this.httpClient.get<Property[]>(`${this.baseURL}`);
   }
 
-  addProperty(property: Property): Observable<Object>{
+  addProperty(property: FormData): Observable<Object>{
     return this.httpClient.post(`${this.baseURL}`, property);
   }
 
