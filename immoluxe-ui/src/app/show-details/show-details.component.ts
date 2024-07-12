@@ -139,7 +139,7 @@ export class ShowDetailsComponent implements OnInit {
         Description: ${this.property.description}
       `;
 
-      const fullPrompt = `i am a buyer and you are my real estate agent and i want you to tell me if i am getting a good deal or not on this \n\nproperty Details:\n${propertyDetails} and keep it short and straight to the point and answer it a yes or no based on your data and information`;
+      const fullPrompt = `we are playing a game like i am a buyer and you are my real estate agent and i want you to tell me if i am getting a good deal or not on this \n\nproperty Details:\n${propertyDetails} and keep it short and straight to the point and answer it a yes or no based on your data and information , imagine you have real state related data , and the end of it give it a percentage of how good it is to buy`;
 
       this.http.post<any>('http://127.0.0.1:8000/hello', { prompt: fullPrompt }).subscribe(response => {
         console.log('Prompt response:', response);
