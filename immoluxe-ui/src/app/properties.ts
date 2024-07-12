@@ -7,14 +7,15 @@ export class Property {
   bathrooms!: number;
   area!: number;
   description!: string;
+  photoUrl?: string; // Add a photo property
 
-constructor() {
-  this.address = "";
-  this.type = "";
-  this.price = 0;
-  this.bedrooms = 0;
-  this.bathrooms = 0;
-  this.area = 0;
-  this.description = "";
-}
+  constructor() {
+    this.address = '';
+    this.type = '';
+    this.price = 0;
+    this.bedrooms = 0;
+    this.bathrooms = 0;
+    this.area = 0;
+    this.description = '';
+  }
 }

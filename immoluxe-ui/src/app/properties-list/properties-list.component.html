@@ -1,59 +1,68 @@
-<br>
-<br>
-<!-- <h1>Property List</h1> -->
-
-<div class="container">
-
-    <div >
-        <form (ngSubmit)="goToProperty()" >
-            <div class="form-group col-md-6 inline ">
-                
-                <input  [(ngModel)]="EnteredID" type="text" class="form-control" id="id" name="id" placeholder="Search by ID">
-                <button class="btn btn-secondary " type="submit">Search</button>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Property Listing</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+        .property-card {
+            margin-bottom: 20px;
+        }
+        .mat-card-title {
+            color: #007BFF;
+            font-weight: bold;
+        }
+        .mat-card-content {
+            color: #6c757d;
+        }
+        .mat-card-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        .property-image {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4 mb-4">Property Listing</h1>
+        <div class="row">
+            <div class="col-md-4 property-card" *ngFor="let property of properties">
+                <mat-card>
+                    <img mat-card-image     src="https://africamodul.com/wp-content/uploads/2019/05/maisons_prefabriquees_2_87m2.jpg" alt="Property Image" class="property-image">
+                    <mat-card-header>
+                        <mat-card-title>{{property.address}}</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p>
+                            <strong>Type:</strong> {{property.type}} <br>
+                            <strong>Price:</strong> {{property.price}} <br>
+                            <strong>Bedrooms:</strong> {{property.bedrooms}} <br>
+                            <strong>Bathrooms:</strong> {{property.bathrooms}} <br>
+                            <strong>Area:</strong> {{property.area}} <br>
+                            <strong>Description:</strong> {{property.description}}
+                        </p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="primary" (click)="updateProperty(property.id)" style="margin: 5px;">
+                            <mat-icon>edit</mat-icon> Update
+                        </button>
+                        <button mat-raised-button color="warn" (click)="deleteProperty(property.id)" style="margin: 5px;">
+                            <mat-icon>delete</mat-icon> Delete
+                        </button>
+                        <button mat-raised-button color="accent" (click)="detailsOfProperty(property.id)" style="margin: 5px;">
+                            <mat-icon>visibility</mat-icon> View
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
             </div>
-        </form>
-
+        </div>
     </div>
-    <br>
-    <br>
-<div>
-<table style="margin-bottom: 50px;" class=" table table-responsive table-striped  border-dark">
-
-    <thead class="table-dark ">
-        <tr>
-            <th>Id</th>
-            <th>Address</th>
-            <th>Type</th>
-            <th>Price</th>
-            <th>Bedrooms</th>
-            <th>Bathrooms</th>
-            <th>Area</th>
-            <th>Description</th>
-            <th>Actions</th>
-        </tr>
-
-    </thead> 
-
-
-    <tbody>
-        <tr *ngFor = "let property of properties">
-            <td>{{property.id}}</td>
-            <td>{{property.address}}</td>
-            <td>{{property.type}}</td>
-            <td>{{property.price}}</td>
-            <td>{{property.bedrooms}}</td>
-            <td>{{property.bathrooms}}</td>
-            <td>{{property.area}}</td>
-            <td>{{property.description}}</td>
-            <td>
-                <button (click) = "updateProperty(property.id)" class = "btn  btn-secondary btn-sm"> Update</button>
-                <button (click) = "deleteProperty(property.id)" class = "btn btn-danger btn-sm" style="margin-left: 10px"> Delete</button>
-                <button (click) = "detailsOfProperty(property.id)" class = "btn btn-success btn-sm " style="margin-left: 10px"> View</button>
-            </td>
-        </tr>
-    </tbody>
-
-
-</table>
-<br><br><br><br>
-</div>
+</body>
+</html>
